@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Library Management</string>
+    <string name="search_book">Tra cứu sách</string>
+    <string name="info_user">Thông tin cá nhân</string>
+    <string name="borrowed_book">Sách đã mượn</string>
+    <string name="log_out">Đăng xuất</string>
+    <string name="book_manager">Quản lý sách</string>
+    <string name="reader_manager">Quản lý độc giả</string>
+    <string name="borrowed_bill">Phiếu trả mượn sách</string>
+    <string name="statistic">Thống kê</string>
+    <string name="librarian_manager">Quản lý thủ thư</string>
+    <string name="rule">Thay đổi quy định</string>
+
 </resources>

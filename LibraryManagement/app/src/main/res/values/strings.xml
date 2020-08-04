@@ -13,4 +13,8 @@
     <string name="gender">Giới tính</string>
     <string name="email">Email</string>
     <string name="address">Địa chỉ</string>
+    <string name="man">Nam</string>
+    <string name="woman">Nữ</string>
+    <string name="save">Lưu</string>
+    <string name="quantum">Số lượng</string>
 </resources>

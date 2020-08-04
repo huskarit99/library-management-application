@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Library Management</string>
-<<<<<<< HEAD
+
     <string name="book_name">Tên sách</string>
     <string name="id_book">Mã sách</string>
     <string name="status">Tình trạng</string>
@@ -14,7 +14,12 @@
     <string name="gender">Giới tính</string>
     <string name="email">Email</string>
     <string name="address">Địa chỉ</string>
-=======
+
+    <string name="man">Nam</string>
+    <string name="woman">Nữ</string>
+    <string name="amount">Số lượng</string>
+
+
     <string name="search_book">Tra cứu sách</string>
     <string name="info_user">Thông tin cá nhân</string>
     <string name="borrowed_book">Sách đã mượn</string>
@@ -26,5 +31,11 @@
     <string name="librarian_manager">Quản lý thủ thư</string>
     <string name="rule">Thay đổi quy định</string>
 
->>>>>>> origin/NMquoc
+
+    <string name="id_bill">Mã phiếu</string>
+    <string name="borrow_date">Ngày mượn</string>
+    <string name="pay_date">Ngày trả</string>
+
+
+
 </resources>

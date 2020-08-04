@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.InformationBookActivity"
+    tools:context=".activities.InfomationBookActivity"
     android:background="@color/background">
     <FrameLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                         android:id="@+id/avatarBook"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/image_reader" />
+                        android:src="@drawable/image_book" />
                 </LinearLayout>
 
                 <LinearLayout

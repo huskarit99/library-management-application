@@ -7,7 +7,7 @@ import android.net.NetworkCapabilities;
 import android.widget.Toast;
 
 public class CheckConnect {
-    public boolean isconnected(Context context) {
+    public static boolean isconnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager==null){
             return false;

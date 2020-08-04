@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddUserActivity.class);
                 startActivity(intent);
                 finish();
             }

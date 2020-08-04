@@ -23,4 +23,8 @@
     <string name="statistic">Thống kê</string>
     <string name="librarian_manager">Quản lý thủ thư</string>
     <string name="rule">Thay đổi quy định</string>
+    <string name="man">Nam</string>
+    <string name="woman">Nữ</string>
+    <string name="save">Lưu</string>
+    <string name="quantum">Số lượng</string>
 </resources>

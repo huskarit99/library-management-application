@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.BorrowedBookActivity"
+    android:background="@color/background">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/frame_borrowed_book">
+        <include
+            android:id="@+id/toolbarBorrowedBook"
+            layout="@layout/toolbar"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical"
+        android:layout_below="@id/frame_borrowed_book">
+        <ListView
+            android:id="@+id/listBorrowedBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:dividerHeight="15dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

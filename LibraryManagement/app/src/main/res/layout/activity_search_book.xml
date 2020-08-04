@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".activities.SearchBookActivity">
+
+    <FrameLayout
+        android:id="@+id/frame_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/toolbarSearch"
+            layout="@layout/toolbar" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frame_search"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8.75"
+                android:background="@drawable/edt_search"
+                android:padding="10dp" />
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.25"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_search"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/edt_search"
+                android:text="@string/book_name"
+                android:textSize="12sp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/edt_search"
+                android:text="@string/author"
+                android:textSize="12sp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/edt_search"
+                android:text="@string/type_book"
+                android:textSize="12sp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_search"
+                android:text="@string/id_book"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray" />
+
+        <ListView
+            android:id="@+id/listBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:dividerHeight="15sp"/>
+
+
+    </LinearLayout>
+</RelativeLayout>

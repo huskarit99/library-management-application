@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_marginTop="29dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="29dp"
+            android:layout_width="76.6dp"
+            android:layout_height="108dp"
+            android:src="@drawable/image_book"/>
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/nameBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/book_name"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#000000" />
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/id_book"
+                    android:textColor="#000000" />
+                <TextView
+                    android:id="@+id/idBook"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/id_book"
+                    android:textColor="#000000" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/id_bill"
+                    android:textColor="#000000" />
+                <TextView
+                    android:id="@+id/idBill"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/id_bill"
+                    android:textColor="#000000" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/id_user"
+                    android:textColor="#000000" />
+                <TextView
+                    android:id="@+id/idReader"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/id_user"
+                    android:textColor="#000000" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/borrow_date"
+                    android:textColor="#000000" />
+                <TextView
+                    android:id="@+id/borrowDate"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/borrow_date"
+                    android:textColor="#000000" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pay_date"
+                    android:textColor="#000000" />
+                <TextView
+                    android:id="@+id/payDate"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pay_date"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

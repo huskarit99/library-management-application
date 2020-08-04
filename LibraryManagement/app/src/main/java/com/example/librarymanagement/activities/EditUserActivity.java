@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.librarymanagement.R;
 
-public class InfomationBookActivity extends AppCompatActivity {
+public class EditUserActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_infomation_book);
+        setContentView(R.layout.activity_edit_user);
     }
 }

@@ -1,10 +1,12 @@
-package com.example.librarymanagement;
+package com.example.librarymanagement.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.librarymanagement.R;
+
+public class InformationBookActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

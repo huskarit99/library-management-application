@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".activities.AddUserActivity">
+    tools:context=".activities.AddUserActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:clickable="true">
 
     <FrameLayout
         android:id="@+id/frame_add_user"
@@ -13,7 +16,7 @@
         android:layout_height="wrap_content">
 
         <include
-            android:id="@+id/toolbarInfoBook"
+            android:id="@+id/toolbarAddUser"
             layout="@layout/toolbar" />
     </FrameLayout>
 
@@ -61,7 +64,7 @@
                         android:orientation="vertical">
 
                         <EditText
-                            android:id="@+id/edtUserName"
+                            android:id="@+id/edtName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/user_name"
@@ -104,7 +107,7 @@
                                 android:textColor="#000" />
 
                             <EditText
-                                android:id="@+id/edtBirthDay"
+                                android:id="@+id/edtBirthday"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
@@ -126,6 +129,7 @@
                                 android:textColor="#000" />
 
                             <RadioGroup
+                                android:id="@+id/radioGroup"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"

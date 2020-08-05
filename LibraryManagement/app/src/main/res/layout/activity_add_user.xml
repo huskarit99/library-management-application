@@ -61,6 +61,7 @@
                         android:orientation="vertical">
 
                         <EditText
+                            android:singleLine="true"
                             android:id="@+id/edtName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -82,6 +83,7 @@
                                 android:textColor="#000" />
 
                             <EditText
+                                android:singleLine="true"
                                 android:id="@+id/edtIdUser"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -91,31 +93,50 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:layout_marginTop="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
+                                android:layout_gravity="center_vertical"
                                 android:text="@string/birthday"
                                 android:textColor="#000" />
-
-                            <EditText
-                                android:id="@+id/edtBirthday"
+                            <LinearLayout
+                                android:layout_marginStart="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
-                                android:hint="@string/birthday"
-                                android:textSize="14sp" />
+                                android:orientation="horizontal"
+                                android:weightSum="4">
+
+                                <EditText
+                                    android:layout_weight="3"
+                                    android:singleLine="true"
+                                    android:id="@+id/edtBirthday"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/rule_calendar"
+                                    android:textSize="14sp" />
+
+                                <ImageView
+                                    android:layout_weight="1"
+                                    android:id="@+id/btnCalendar"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_calendar" />
+
+                            </LinearLayout>
+
+
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="13.5dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -171,6 +192,7 @@
                             android:textColor="#000" />
 
                         <EditText
+                            android:singleLine="true"
                             android:id="@+id/edtEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -193,6 +215,7 @@
                             android:textColor="#000" />
 
                         <EditText
+                            android:singleLine="true"
                             android:id="@+id/edtAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

@@ -75,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setCancelable(false);
                 builder.setMessage("Bạn có muốn thoát?")
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override

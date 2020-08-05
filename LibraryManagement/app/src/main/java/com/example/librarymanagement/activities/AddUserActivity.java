@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,12 +29,9 @@ import com.example.librarymanagement.networks.CheckConnect;
 import com.example.librarymanagement.networks.Server;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.io.FileNotFoundException;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,9 +41,6 @@ import android.net.Uri;
 import android.database.Cursor;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.os.Environment;
-import java.io.File;
-import java.io.OutputStream;
 
 
 public class AddUserActivity extends AppCompatActivity {
@@ -156,11 +149,8 @@ public class AddUserActivity extends AppCompatActivity {
         }else{
             Toast.makeText(AddUserActivity.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -170,6 +160,7 @@ public class AddUserActivity extends AppCompatActivity {
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 edtImage.setImageBitmap(imageBitmap);
+                BitMapToString(imageBitmap);
             } else if (requestCode == 2) {
                 Uri selectedImage = data.getData();
                 String[] filePath = {MediaStore.Images.Media.DATA};
@@ -195,30 +186,29 @@ public class AddUserActivity extends AppCompatActivity {
     }
 
     private void selectImage(){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        builder1.setMessage("Write your message here.");
-        builder1.setCancelable(true);
-
-        builder1.setPositiveButton(
-                "Take Photo",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent, 1);
-                    }
-                });
-
-        builder1.setNegativeButton(
-                "Choose from Gallery",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(intent, 2);
-                    }
-                });
-
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        System.out.println(this);
+        builder.setTitle("Add Photo!");
+        builder.setCancelable(false);
+        builder.setItems(options, new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick (DialogInterface dialog, int item){
+                if (options[item].equals("Take Photo")) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 1);
+                }
+                else if (options[item].equals("Choose from Gallery")){
+                    Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 2);
+                }
+                else{
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void mapping() {

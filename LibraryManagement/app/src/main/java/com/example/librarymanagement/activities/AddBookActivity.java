@@ -46,11 +46,11 @@ import java.util.Map;
 public class AddBookActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private TextView edtBookName, edtPublishingYear, edtAuthor;
+    private TextView edtBookName, edtPublishingYear, edtAuthor, edtCategory, edtPublisher;
     private ImageView edtImage;
 
-    String[] authors;
-    private String image, book_name, publishing_year, listAuthors;
+    String[] authors, categories, publishers;
+    private String image, book_name, publishing_year, publisher, category;
 
     ArrayList<Integer> mAuthor = new ArrayList<>();
 
@@ -79,6 +79,24 @@ public class AddBookActivity extends AppCompatActivity {
                 selectAuthors();
             }
         }) ;
+
+        getCategory();
+        edtCategory.setInputType(InputType.TYPE_NULL);
+        edtCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectCategory();
+            }
+        });
+
+        getPublisher();
+        edtPublisher.setInputType(InputType.TYPE_NULL);
+        edtPublisher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectPublisher();
+            }
+        });
     }
 
     @Override
@@ -257,11 +275,79 @@ public class AddBookActivity extends AppCompatActivity {
         image = Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
+    public void getCategory(){
+        if(CheckConnect.isconnected(AddBookActivity.this)) {
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+            JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLCATEGORIES, null,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            categories = new String[response.length()];
+                            for (int i = 0; i < response.length(); i++){
+                                try {
+                                    JSONObject jsonObject = response.getJSONObject(i);
+                                    categories[i] = jsonObject.getString("name");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddBookActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            requestQueue.add(arrayReq);
+        }else{
+            Toast.makeText(AddBookActivity.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void selectCategory(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddBookActivity.this);
+        builder.setTitle("List Categories");
+        boolean checkedCategory = false;
+        category = categories[0];
+        builder.setSingleChoiceItems(categories, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int position) {
+                category = categories[position];
+            }
+        });
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int position) {
+                edtCategory.setText(category);
+            }
+        });
+        builder.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog Dialog = builder.create();
+        Dialog.show();
+    }
+
+    public void getPublisher(){
+
+    }
+
+    public void selectPublisher(){
+
+    }
+
     private void mapping() {
         toolbar = findViewById(R.id.toolbarAddBook);
         edtBookName = findViewById(R.id.edtBookName);
         edtPublishingYear = findViewById(R.id.edtPublishingYear);
         edtImage = findViewById(R.id.avatarBook);
         edtAuthor = findViewById(R.id.edtAuthor);
+        edtCategory = findViewById(R.id.edtCategory);
+        edtPublisher = findViewById(R.id.edtPublisher);
     }
 }

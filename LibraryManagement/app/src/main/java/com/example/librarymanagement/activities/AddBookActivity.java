@@ -40,6 +40,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +50,8 @@ public class AddBookActivity extends AppCompatActivity {
     private TextView edtBookName, edtPublishingYear, edtAuthor, edtCategory, edtPublisher;
     private ImageView edtImage;
 
-    String[] authors, categories, publishers;
+    String[] authors_name, categories, publishers;
+    Integer[] authors_id;
     private String image, book_name, publishing_year, publisher, category;
 
     ArrayList<Integer> mAuthor = new ArrayList<>();
@@ -162,8 +164,10 @@ public class AddBookActivity extends AppCompatActivity {
             if(item.getItemId() == R.id.save_data){
                 book_name = edtBookName.getText().toString();
                 publishing_year = edtPublishingYear.getText().toString();
+                publisher = edtPublisher.getText().toString();
+                category = edtCategory.getText().toString();
                 RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDUSER,
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDBOOK,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -184,6 +188,8 @@ public class AddBookActivity extends AppCompatActivity {
                         params.put("bookname", book_name);
                         params.put("publishingyear", publishing_year);
                         params.put("image", image);
+                        params.put("publisher", publisher);
+                        params.put("category", category);
                         return params;
                     }
                 };
@@ -202,11 +208,13 @@ public class AddBookActivity extends AppCompatActivity {
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
-                            authors = new String[response.length()];
+                            authors_name = new String[response.length()];
+                            authors_id = new Integer[response.length()];
                              for (int i = 0; i < response.length(); i++){
                                 try {
                                     JSONObject jsonObject = response.getJSONObject(i);
-                                    authors[i] = jsonObject.getString("name");
+                                    authors_name[i] = jsonObject.getString("name");
+                                    authors_id[i] = Integer.parseInt(jsonObject.getString("author_id"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -229,9 +237,14 @@ public class AddBookActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(AddBookActivity.this);
         builder.setTitle("List Authors");
         boolean[] checkedAuthor;
-        checkedAuthor = new boolean[authors.length];
+        Map<String, Integer> mapAuthors = new HashMap<String, Integer>();
+        for (int i = 0; i < authors_name.length; i++){
+            mapAuthors.put(authors_name[i], authors_id[i]);
+        }
+        Arrays.sort(authors_name);
+        checkedAuthor = new boolean[authors_name.length];
         mAuthor.clear();
-        builder.setMultiChoiceItems(authors, checkedAuthor, new DialogInterface.OnMultiChoiceClickListener() {
+        builder.setMultiChoiceItems(authors_name, checkedAuthor, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int position, boolean ischecked) {
                 if (ischecked){
@@ -252,7 +265,7 @@ public class AddBookActivity extends AppCompatActivity {
                 for (int i = 0; i < mAuthor.size(); i++){
                     if (i != 0)
                         text += ", ";
-                    text += authors[mAuthor.get(i)];
+                    text += authors_name[mAuthor.get(i)];
                 }
                 edtAuthor.setText(text);
             }
@@ -309,6 +322,7 @@ public class AddBookActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(AddBookActivity.this);
         builder.setTitle("List Categories");
         boolean checkedCategory = false;
+        Arrays.sort(categories);
         category = categories[0];
         builder.setSingleChoiceItems(categories, 0, new DialogInterface.OnClickListener() {
             @Override
@@ -334,11 +348,62 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     public void getPublisher(){
-
+        if(CheckConnect.isconnected(AddBookActivity.this)) {
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+            JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLPUBLISHERS, null,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            publishers = new String[response.length()];
+                            for (int i = 0; i < response.length(); i++){
+                                try {
+                                    JSONObject jsonObject = response.getJSONObject(i);
+                                    publishers[i] = jsonObject.getString("name");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddBookActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            requestQueue.add(arrayReq);
+        }else{
+            Toast.makeText(AddBookActivity.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void selectPublisher(){
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddBookActivity.this);
+        builder.setTitle("List Categories");
+        boolean checkedCategory = false;
+        Arrays.sort(publishers);
+        publisher = publishers[0];
+        builder.setSingleChoiceItems(publishers, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int position) {
+                publisher = publishers[position];
+            }
+        });
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int position) {
+                edtPublisher.setText(publisher);
+            }
+        });
+        builder.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog Dialog = builder.create();
+        Dialog.show();
     }
 
     private void mapping() {

@@ -112,9 +112,8 @@ public class AddUserActivity extends AppCompatActivity {
                 birthday = edtBirthday.getText().toString();
                 address = edtAddress.getText().toString();
                 password = "123456";
-                System.out.println(image.length());
                 RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.addUser,
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDUSER,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -188,7 +187,6 @@ public class AddUserActivity extends AppCompatActivity {
     private void selectImage(){
         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        System.out.println(this);
         builder.setTitle("Add Photo!");
         builder.setCancelable(false);
         builder.setItems(options, new DialogInterface.OnClickListener(){

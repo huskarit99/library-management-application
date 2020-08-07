@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <include
-            android:id="@+id/toolbarInfoBook"
+            android:id="@+id/toolbarAddBook"
             layout="@layout/toolbar" />
     </FrameLayout>
 
@@ -62,6 +62,7 @@
 
                         <EditText
                             android:id="@+id/edtBookName"
+                            android:singleLine="true"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/book_name"
@@ -81,6 +82,16 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/type_book"
                                 android:textColor="#000" />
+                            <EditText
+                                android:id="@+id/edtCategory"
+                                android:drawableRight="@drawable/ic_unfold"
+                                android:singleLine="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:hint="Thể loại"
+
+                                android:textSize="14sp"/>
                         </LinearLayout>
                     </LinearLayout>
 
@@ -103,6 +114,15 @@
                             android:layout_marginBottom="21dp"
                             android:text="@string/author"
                             android:textColor="#000" />
+                        <EditText
+                            android:drawableRight="@drawable/ic_unfold"
+                            android:singleLine="true"
+                            android:id="@+id/edtAuthor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="59dp"
+                            android:hint="Tác giả"
+                            android:textSize="14sp"/>
 
                     </LinearLayout>
 
@@ -120,11 +140,12 @@
 
                         <EditText
                             android:id="@+id/edtPublisher"
+                            android:drawableRight="@drawable/ic_unfold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="22dp"
-                            android:layout_marginBottom="21dp"
                             android:hint="@string/publisher"
+                            android:singleLine="true"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -142,9 +163,10 @@
 
                         <EditText
                             android:id="@+id/edtPublishingYear"
+                            android:singleLine="true"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="22dp"
+                            android:layout_marginStart="18dp"
                             android:hint="@string/publishing_year"
                             android:textSize="14sp" />
                     </LinearLayout>

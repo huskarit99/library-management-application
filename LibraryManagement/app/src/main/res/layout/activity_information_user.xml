@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/frame_info_user">
         <include
-            android:id="@+id/toolbarInfoBook"
+            android:id="@+id/toolbarInfoUser"
             layout="@layout/toolbar"/>
     </FrameLayout>
     <androidx.cardview.widget.CardView
@@ -38,7 +38,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/avatarBook"
+                        android:id="@+id/imgAvatar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/image_reader" />
@@ -50,7 +50,7 @@
                     android:layout_marginStart="22.4dp"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/nameUser"
+                        android:id="@+id/tvNameUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/user_name"
@@ -89,21 +89,21 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
-                                android:id="@+id/idUser"
+                                android:id="@+id/tvIdUser"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/id_user"
                                 android:textColor="#000"
                                 android:layout_marginBottom="10dp"/>
                             <TextView
-                                android:id="@+id/birthday"
+                                android:id="@+id/tvBirthday"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/birthday"
                                 android:textColor="#000"
                                 android:layout_marginBottom="10dp"/>
                             <TextView
-                                android:id="@+id/gender"
+                                android:id="@+id/tvGender"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/gender"
@@ -143,14 +143,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/email"
+                        android:id="@+id/tvEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/email"
                         android:textColor="#000"
                         android:layout_marginBottom="21dp"/>
                     <TextView
-                        android:id="@+id/address"
+                        android:id="@+id/tvAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/address"

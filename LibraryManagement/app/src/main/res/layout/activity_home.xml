@@ -71,10 +71,12 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/lnInfo"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:clickable="true">
                             <ImageButton
                                 android:layout_gravity="center_horizontal"
                                 android:layout_width="90dp"
@@ -82,7 +84,7 @@
                                 android:background="@drawable/btn_menu"
                                 android:id="@+id/infoUser"
                                 android:src="@drawable/ic_person"
-                                />
+                                android:clickable="false"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

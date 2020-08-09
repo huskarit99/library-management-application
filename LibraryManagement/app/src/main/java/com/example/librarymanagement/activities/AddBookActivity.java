@@ -60,6 +60,7 @@ public class AddBookActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        init();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
 
@@ -101,6 +102,14 @@ public class AddBookActivity extends AppCompatActivity {
                 selectPublisher();
             }
         });
+    }
+
+    void init(){
+        image = "";
+        book_name = "";
+        publishing_year = "";
+        publisher = "";
+        category = "";
     }
 
     @Override

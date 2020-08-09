@@ -20,13 +20,15 @@
         <activity android:name=".activities.BorrowManagerActivity" />
         <activity android:name=".activities.BorrowedBookActivity" />
         <activity android:name=".activities.SearchBookActivity" />
-        <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.HomeActivity"
+            android:screenOrientation="portrait" />
 
 
         <activity android:name=".activities.InformationReaderActivity"/>
         <activity android:name=".activities.AddBookActivity" />
         <activity android:name=".activities.EditBookActivity" />
-        <activity android:name=".activities.AddUserActivity" />
+        <activity android:name=".activities.AddUserActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".activities.EditUserActivity" />
         <activity android:name=".activities.InformationUserActivity" />
         <activity android:name=".activities.InformationBookActivity" />

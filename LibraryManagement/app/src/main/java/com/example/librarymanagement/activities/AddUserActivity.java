@@ -11,12 +11,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.graphics.BitmapFactory;
+import android.database.Cursor;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,16 +40,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
-import android.content.Intent;
-import android.net.Uri;
-import android.database.Cursor;
-import android.provider.MediaStore;
-import android.util.Log;
-
 
 public class AddUserActivity extends AppCompatActivity {
 

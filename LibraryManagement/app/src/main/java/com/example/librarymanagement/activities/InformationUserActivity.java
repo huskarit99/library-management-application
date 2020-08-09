@@ -10,30 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.librarymanagement.R;
 import com.example.librarymanagement.models.User;
-import com.example.librarymanagement.networks.Server;
-import com.example.librarymanagement.networks.SessionManager;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class InformationUserActivity extends AppCompatActivity {
     Toolbar toolbar;
     TextView tvNameUser, tvIdUser, tvBirthday, tvGender, tvEmail, tvAddress;
     ImageView imgAvatar;
-    SessionManager sessionManager;
     User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +43,9 @@ public class InformationUserActivity extends AppCompatActivity {
             tvGender.setText(user.getGender());
             tvEmail.setText(user.getEmail());
             tvAddress.setText(user.getAddress());
+            System.out.println(user.getImage());
+            user.setImage(user.getImage().replace("p:", "ps:"));
+            System.out.println(user.getImage());
             Picasso.get().load(user.getImage()).into(imgAvatar);
         }else{
             Toast.makeText(InformationUserActivity.this, "Load dữ liệu không thành công", Toast.LENGTH_SHORT).show();

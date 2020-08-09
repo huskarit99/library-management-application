@@ -1,7 +1,6 @@
 package com.example.librarymanagement.models;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class User implements Serializable {
     int user_id;

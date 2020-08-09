@@ -141,7 +141,7 @@ public class AddUserActivity extends AppCompatActivity {
                             params.put("password", password);
                             params.put("image", image);
                             return params;
-                    }
+                        }
                 };
                 requestQueue.add(stringRequest);
             }

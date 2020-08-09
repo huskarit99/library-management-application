@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void doLogin(final String userId, final String password) {
         RequestQueue queue = Volley.newRequestQueue(getApplication());
-        StringRequest postRequest = new StringRequest(Request.Method.POST, Server.getUser,
+        StringRequest postRequest = new StringRequest(Request.Method.POST, Server.GETUSER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

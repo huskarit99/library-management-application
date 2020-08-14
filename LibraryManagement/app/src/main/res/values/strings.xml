@@ -36,4 +36,8 @@
 
     <string name="save">Lưu</string>
     <string name="quantum">Số lượng</string>
+    <string name="add">Thêm</string>
+    <string name="edit">Chỉnh sửa</string>
+
+    <string name="id_librarian">Mã thủ thư</string>
 </resources>

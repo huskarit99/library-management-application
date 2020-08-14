@@ -9,8 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -20,7 +18,7 @@ import com.example.librarymanagement.networks.SessionManager;
 public class HomeActivity extends AppCompatActivity {
 
     Toolbar toolbarHome;
-    LinearLayout linearLogout;
+    LinearLayout linearLogout, linearReaderManager;
     SessionManager sessionManager;
     CardView cardViewLibrarian, cardViewAdmin;
     static boolean count;
@@ -64,6 +62,13 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        linearReaderManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent = new Intent(HomeActivity.this, UserManagerActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -87,9 +92,16 @@ public class HomeActivity extends AppCompatActivity {
        }
     }
 
+    @Override
+    protected void onDestroy() {
+        android.os.Process.killProcess(android.os.Process.myPid());
+        super.onDestroy();
+    }
+
     private void mapping() {
         toolbarHome = findViewById(R.id.toolbarHome);
         linearLogout = findViewById(R.id.lnLogout);
+        linearReaderManager = findViewById(R.id.lnReaderManager);
         cardViewLibrarian = findViewById(R.id.cardViewLibrarian);
         cardViewAdmin = findViewById(R.id.cardViewAdmin);
     }

@@ -6,4 +6,6 @@ public class Server {
     public static String addUser = "http://" + localhost + "/adduser.php";
 
     public static String getUser = "http://" + localhost + "/getuser.php";
+
+    public static String getListUser = "http://" + localhost + "/getlistuser.php";
 }

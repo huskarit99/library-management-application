@@ -51,7 +51,7 @@
                             android:id="@+id/avatarBook"
                             android:layout_width="match_parent"
                             android:layout_height="108dp"
-                            android:src="@drawable/ic_add_book" />
+                            android:src="@drawable/ic_image_book" />
                     </LinearLayout>
 
                     <LinearLayout

@@ -6,11 +6,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,9 +42,10 @@ public class ReaderManagerActivity extends AppCompatActivity {
     ListView listReader;
     ArrayList<User> userArrayList;
     UserAdapter userAdapter;
-    public static final String READER ="READER";
+    public static final String READER = "READER";
     String url;
     TextView tvNotification;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,22 +63,49 @@ public class ReaderManagerActivity extends AppCompatActivity {
         });
         userArrayList = new ArrayList<>();
         userAdapter = new UserAdapter(this, R.layout.row_user, userArrayList);
-        if(CheckConnect.isconnected(ReaderManagerActivity.this)){
-            url= Server.getListUser+"?role_id="+1;
+        if (CheckConnect.isconnected(ReaderManagerActivity.this)) {
+            url = Server.getListUser + "?role_id=" + 1;
             getListUser(url);
             listReader.setAdapter(userAdapter);
-        }else{
+        } else {
             Toast.makeText(ReaderManagerActivity.this, "Thiết bị chưa kết nối mạng", Toast.LENGTH_SHORT).show();
         }
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                final ArrayList<User> results = new ArrayList<>();
+                for(User x : userArrayList){
+                    if(x.getName().contains(newText) || String.valueOf(x.getUser_id()).contains(newText)){
+                        results.add(x);
+                    }
+                }
+                ((UserAdapter) listReader.getAdapter()).update(results);
+
+                listReader.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(ReaderManagerActivity.this, InformationReaderActivity.class);
+                        intent.putExtra(READER, results.get(position));
+                        startActivity(intent);
+                    }
+                });
+                return false;
+            }
+        });
         listReader.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ReaderManagerActivity.this, InformationReaderActivity.class);
-                intent.putExtra(READER,userArrayList.get(position));
+                intent.putExtra(READER, userArrayList.get(position));
                 startActivity(intent);
             }
         });
+
 
     }
 
@@ -86,7 +117,7 @@ public class ReaderManagerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.add_data){
+        if (item.getItemId() == R.id.add_data) {
             Intent intent = new Intent(ReaderManagerActivity.this, AddUserActivity.class);
             startActivity(intent);
         }
@@ -100,10 +131,10 @@ public class ReaderManagerActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        if(response.equals("empty")){
-                            Toast.makeText(ReaderManagerActivity.this, "Danh sách trống",Toast.LENGTH_SHORT).show();
+                        if (response.equals("empty")) {
+                            Toast.makeText(ReaderManagerActivity.this, "Danh sách trống", Toast.LENGTH_SHORT).show();
                             tvNotification.setVisibility(View.VISIBLE);
-                        }else{
+                        } else {
 
                             for (int i = 0; i < response.length(); i++) {
                                 try {
@@ -139,5 +170,6 @@ public class ReaderManagerActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarReaderManager);
         listReader = findViewById(R.id.listReader);
         tvNotification = findViewById(R.id.tvNotification);
+        searchView = findViewById(R.id.searchReader);
     }
 }

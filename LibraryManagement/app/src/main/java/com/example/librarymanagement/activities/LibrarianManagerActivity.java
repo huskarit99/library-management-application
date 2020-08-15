@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,9 +39,10 @@ public class LibrarianManagerActivity extends AppCompatActivity {
     ListView listLibrarian;
     ArrayList<User> userArrayList;
     UserAdapter userAdapter;
-    public static final String LIBRARIAN ="LIBRARIAN";
+    public static final String LIBRARIAN = "LIBRARIAN";
     String url;
     TextView tvNotification;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,23 +60,51 @@ public class LibrarianManagerActivity extends AppCompatActivity {
         });
         userArrayList = new ArrayList<>();
         userAdapter = new UserAdapter(this, R.layout.row_user, userArrayList);
-        if(CheckConnect.isconnected(LibrarianManagerActivity.this)){
-            url= Server.getListUser+"?role_id="+2;
+        if (CheckConnect.isconnected(LibrarianManagerActivity.this)) {
+            url = Server.getListUser + "?role_id=" + 2;
             getListUser(url);
             listLibrarian.setAdapter(userAdapter);
-        }else{
+        } else {
             Toast.makeText(LibrarianManagerActivity.this, "Thiết bị chưa kết nối mạng", Toast.LENGTH_SHORT).show();
         }
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                final ArrayList<User> results = new ArrayList<>();
+                for(User x : userArrayList){
+                    if(x.getName().contains(newText) || String.valueOf(x.getUser_id()).contains(newText)){
+                        results.add(x);
+                    }
+                }
+                ((UserAdapter) listLibrarian.getAdapter()).update(results);
+                listLibrarian.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(LibrarianManagerActivity.this, InformationLibrarianActivity.class);
+                        intent.putExtra(LIBRARIAN, results.get(position));
+                        startActivity(intent);
+                    }
+                });
+                return false;
+            }
+        });
 
         listLibrarian.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(LibrarianManagerActivity.this, InformationLibrarianActivity.class);
-                intent.putExtra(LIBRARIAN,userArrayList.get(position));
+                intent.putExtra(LIBRARIAN, userArrayList.get(position));
                 startActivity(intent);
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add, menu);
@@ -83,7 +113,7 @@ public class LibrarianManagerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.add_data){
+        if (item.getItemId() == R.id.add_data) {
             Intent intent = new Intent(LibrarianManagerActivity.this, AddUserActivity.class);
             startActivity(intent);
         }
@@ -97,9 +127,9 @@ public class LibrarianManagerActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        if(response.equals("empty")){
-                            Toast.makeText(LibrarianManagerActivity.this, "Danh sách trống",Toast.LENGTH_SHORT).show();
-                        }else{
+                        if (response.equals("empty")) {
+                            Toast.makeText(LibrarianManagerActivity.this, "Danh sách trống", Toast.LENGTH_SHORT).show();
+                        } else {
                             for (int i = 0; i < response.length(); i++) {
                                 try {
                                     JSONObject jsonObject = response.getJSONObject(i);
@@ -135,5 +165,6 @@ public class LibrarianManagerActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarLibrarianManager);
         listLibrarian = findViewById(R.id.listLibrarian);
         tvNotification = findViewById(R.id.tvNotification);
+        searchView = findViewById(R.id.searchLibrarian);
     }
 }

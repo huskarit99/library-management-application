@@ -12,6 +12,7 @@ import com.example.librarymanagement.R;
 import com.example.librarymanagement.models.User;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserAdapter extends BaseAdapter {
@@ -23,6 +24,11 @@ public class UserAdapter extends BaseAdapter {
         this.context = context;
         this.layout = layout;
         this.listUser = listUser;
+    }
+    public void update(ArrayList<User> results){
+        listUser = new ArrayList<>();
+        listUser.addAll(results);
+        notifyDataSetChanged();
     }
 
     @Override

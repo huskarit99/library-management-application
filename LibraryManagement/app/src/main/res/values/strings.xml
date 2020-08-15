@@ -40,4 +40,5 @@
     <string name="edit">Chỉnh sửa</string>
 
     <string name="id_librarian">Mã thủ thư</string>
+    <string name="list_empty">Danh sách rỗng</string>
 </resources>

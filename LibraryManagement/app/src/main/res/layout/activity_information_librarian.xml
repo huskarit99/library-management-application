@@ -96,14 +96,14 @@
                                 android:textColor="#000"
                                 android:layout_marginBottom="10dp"/>
                             <TextView
-                                android:id="@+id/tvBirthdayReader"
+                                android:id="@+id/tvBirthdayLibrarian"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/birthday"
                                 android:textColor="#000"
                                 android:layout_marginBottom="10dp"/>
                             <TextView
-                                android:id="@+id/tvGenderReader"
+                                android:id="@+id/tvGenderLibrarian"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/gender"

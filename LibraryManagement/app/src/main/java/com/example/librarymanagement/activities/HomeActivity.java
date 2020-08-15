@@ -18,7 +18,7 @@ import com.example.librarymanagement.networks.SessionManager;
 public class HomeActivity extends AppCompatActivity {
 
     Toolbar toolbarHome;
-    LinearLayout linearLogout, linearReaderManager;
+    LinearLayout linearLogout, linearReaderManager, linearLibrarianManager;
     SessionManager sessionManager;
     CardView cardViewLibrarian, cardViewAdmin;
     static boolean count;
@@ -65,7 +65,14 @@ public class HomeActivity extends AppCompatActivity {
         linearReaderManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent = new Intent(HomeActivity.this, UserManagerActivity.class);
+                Intent  intent = new Intent(HomeActivity.this, ReaderManagerActivity.class);
+                startActivity(intent);
+            }
+        });
+        linearLibrarianManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent = new Intent(HomeActivity.this, LibrarianManagerActivity.class);
                 startActivity(intent);
             }
         });
@@ -102,6 +109,7 @@ public class HomeActivity extends AppCompatActivity {
         toolbarHome = findViewById(R.id.toolbarHome);
         linearLogout = findViewById(R.id.lnLogout);
         linearReaderManager = findViewById(R.id.lnReaderManager);
+        linearLibrarianManager = findViewById(R.id.lnLibrarianManager);
         cardViewLibrarian = findViewById(R.id.cardViewLibrarian);
         cardViewAdmin = findViewById(R.id.cardViewAdmin);
     }

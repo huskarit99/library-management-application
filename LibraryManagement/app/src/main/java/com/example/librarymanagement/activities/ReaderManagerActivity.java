@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -32,29 +33,23 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class UserManagerActivity extends AppCompatActivity {
+public class ReaderManagerActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    ListView listUser;
+    ListView listReader;
     ArrayList<User> userArrayList;
     UserAdapter userAdapter;
     public static final String READER ="READER";
-    public static final String LIBRARIAN ="LIBRARIAN";
-    SessionManager sessionManager;
     String url;
+    TextView tvNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reader_manager);
         mapping();
-        sessionManager = new SessionManager(this);
         setSupportActionBar(toolbar);
-        if(sessionManager.getRole()==3){
-            getSupportActionBar().setTitle("Quản lý thủ thư");
-        }else if(sessionManager.getRole()==2){
-            getSupportActionBar().setTitle("Quản lý độc giả");
-        }
+        getSupportActionBar().setTitle("Quản lý độc giả");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,34 +59,20 @@ public class UserManagerActivity extends AppCompatActivity {
         });
         userArrayList = new ArrayList<>();
         userAdapter = new UserAdapter(this, R.layout.row_user, userArrayList);
-        if(CheckConnect.isconnected(UserManagerActivity.this)){
-            if(sessionManager.getRole()==3){
-                url= Server.getListUser+"?role_id="+2;
-                getListUser(url);
-                listUser.setAdapter(userAdapter);
-
-            }else if(sessionManager.getRole()==2){
-                url= Server.getListUser+"?role_id="+1;
-                getListUser(url);
-                listUser.setAdapter(userAdapter);
-            }
+        if(CheckConnect.isconnected(ReaderManagerActivity.this)){
+            url= Server.getListUser+"?role_id="+1;
+            getListUser(url);
+            listReader.setAdapter(userAdapter);
         }else{
-            Toast.makeText(UserManagerActivity.this, "Thiết bị chưa kết nối mạng", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReaderManagerActivity.this, "Thiết bị chưa kết nối mạng", Toast.LENGTH_SHORT).show();
         }
 
-        listUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listReader.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(sessionManager.getRole()==3){
-                    Intent intent = new Intent(UserManagerActivity.this, InformationLibrarianActivity.class);
-                    intent.putExtra(LIBRARIAN,userArrayList.get(position));
-                    startActivity(intent);
-
-                }else if(sessionManager.getRole()==2){
-                    Intent intent = new Intent(UserManagerActivity.this, InformationReaderActivity.class);
-                    intent.putExtra(READER,userArrayList.get(position));
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(ReaderManagerActivity.this, InformationReaderActivity.class);
+                intent.putExtra(READER,userArrayList.get(position));
+                startActivity(intent);
             }
         });
 
@@ -106,22 +87,24 @@ public class UserManagerActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.add_data){
-            Intent intent = new Intent(UserManagerActivity.this, AddUserActivity.class);
+            Intent intent = new Intent(ReaderManagerActivity.this, AddUserActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void getListUser(String url) {
-        final RequestQueue requestQueue = Volley.newRequestQueue(UserManagerActivity.this);
+        final RequestQueue requestQueue = Volley.newRequestQueue(ReaderManagerActivity.this);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         if(response.equals("empty")){
-                            Toast.makeText(UserManagerActivity.this, "Danh sách trống",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ReaderManagerActivity.this, "Danh sách trống",Toast.LENGTH_SHORT).show();
+                            tvNotification.setVisibility(View.VISIBLE);
                         }else{
+
                             for (int i = 0; i < response.length(); i++) {
                                 try {
                                     JSONObject jsonObject = response.getJSONObject(i);
@@ -146,7 +129,7 @@ public class UserManagerActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(UserManagerActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                tvNotification.setVisibility(View.VISIBLE);
             }
         });
         requestQueue.add(jsonArrayRequest);
@@ -154,6 +137,7 @@ public class UserManagerActivity extends AppCompatActivity {
 
     private void mapping() {
         toolbar = findViewById(R.id.toolbarReaderManager);
-        listUser = findViewById(R.id.listReader);
+        listReader = findViewById(R.id.listReader);
+        tvNotification = findViewById(R.id.tvNotification);
     }
 }

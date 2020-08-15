@@ -4,45 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ReaderManagerActivity"
     android:background="@color/background"
+    android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:clickable="true">
+    tools:context=".activities.LibrarianManagerActivity">
 
     <FrameLayout
-        android:id="@+id/frame_reader_manager"
+        android:id="@+id/frame_librarian_manager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include
-            android:id="@+id/toolbarReaderManager"
+            android:id="@+id/toolbarLibrarianManager"
             layout="@layout/toolbar" />
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/frame_reader_manager"
+        android:layout_below="@id/frame_librarian_manager"
         android:layout_margin="15dp"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="10">
+
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="8.75"
                 android:background="@drawable/edt_search"
                 android:padding="10dp" />
+
             <ImageView
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1.25"
                 android:layout_width="0dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_search"/>
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.25"
+                android:src="@drawable/ic_search" />
         </LinearLayout>
 
         <View
@@ -55,25 +58,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:layout_gravity="center_vertical|center_horizontal"
                 android:id="@+id/tvNotification"
-                android:textSize="25sp"
-                android:text="@string/list_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:ignore="HardcodedText"
-                android:visibility="invisible" />
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:text="@string/list_empty"
+                android:textSize="25sp"
+                android:visibility="invisible"
+                tools:ignore="HardcodedText" />
+
             <ListView
-                android:background="@color/background"
-                android:id="@+id/listReader"
+                android:scrollbarThumbVertical="@null"
+                android:id="@+id/listLibrarian"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:background="@color/background"
                 android:divider="@color/background"
-                android:dividerHeight="15sp"
-                android:scrollbarThumbVertical="@null"/>
+                android:dividerHeight="15sp" />
         </FrameLayout>
-
 
     </LinearLayout>
 

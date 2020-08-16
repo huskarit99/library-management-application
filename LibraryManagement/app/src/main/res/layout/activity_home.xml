@@ -54,7 +54,7 @@
                             android:layout_weight="1">
 
                             <ImageButton
-                                android:id="@+id/searhBook"
+                                android:id="@+id/searchBook"
                                 android:layout_width="90dp"
                                 android:layout_height="90dp"
                                 android:layout_gravity="center_horizontal"

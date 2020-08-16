@@ -52,22 +52,22 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CheckConnect.isconnected(LoginActivity.this)) {
-                    String userId = edtUserId.getText().toString();
-                    String password = edtPassword.getText().toString();
+            if (CheckConnect.isconnected(LoginActivity.this)) {
+                String userId = edtUserId.getText().toString();
+                String password = edtPassword.getText().toString();
 
-                    if (userId.isEmpty() && password.isEmpty()) {
-                        Toast.makeText(LoginActivity.this, "Bạn chưa nhập thông tin", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (userId.isEmpty() || password.isEmpty()) {
-                            Toast.makeText(LoginActivity.this, "Bạn chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
-                        } else {
-                            doLogin(userId, password);
-                        }
-                    }
+                if (userId.isEmpty() && password.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Bạn chưa nhập thông tin", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Thiết bị không kết nối mạng", Toast.LENGTH_SHORT).show();
+                    if (userId.isEmpty() || password.isEmpty()) {
+                        Toast.makeText(LoginActivity.this, "Bạn chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                    } else {
+                        doLogin(userId, password);
+                    }
                 }
+            } else {
+                Toast.makeText(LoginActivity.this, "Thiết bị không kết nối mạng", Toast.LENGTH_SHORT).show();
+            }
             }
         });
         btnExit.setOnClickListener(new View.OnClickListener() {

@@ -25,25 +25,16 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="10">
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="8.75"
-                android:background="@drawable/edt_search"
-                android:padding="10dp" />
-            <ImageView
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1.25"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_search"/>
+            android:layout_width="match_parent"
+            android:weightSum="4">
+
+            <SearchView
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/edt_search" />
         </LinearLayout>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,6 +44,7 @@
             android:weightSum="4">
 
             <Button
+                android:id="@+id/btnNameBook"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="10dp"
@@ -62,6 +54,7 @@
                 android:textSize="12sp" />
 
             <Button
+                android:id="@+id/btnAuthor"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="10dp"
@@ -71,6 +64,7 @@
                 android:textSize="12sp" />
 
             <Button
+                android:id="@+id/btnCategory"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="10dp"
@@ -80,6 +74,7 @@
                 android:textSize="12sp" />
 
             <Button
+                android:id="@+id/btnIdBook"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_weight="1"
@@ -99,8 +94,9 @@
             android:id="@+id/listBook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:dividerHeight="15sp"/>
+            android:dividerHeight="15sp"
+            android:divider="@color/background"
+            android:layout_marginTop="15dp"/>
 
 
     </LinearLayout>

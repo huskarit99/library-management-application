@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="20dp">
-
+    app:cardCornerRadius="20dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/imageBook"
             android:layout_margin="15dp"
             android:layout_width="76.6dp"
             android:layout_height="108dp"
@@ -21,6 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/nameBook"
                 android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -29,34 +32,33 @@
                 android:textSize="18sp"
                 android:textColor="#000000" />
             <TextView
+                android:id="@+id/idBook"
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/id_book"
+                android:textColor="#000000" />
+            <TextView
                 android:id="@+id/author"
                 android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/author"
                 android:textColor="#000000" />
-            <LinearLayout
+            <TextView
+                android:id="@+id/category"
+                android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/amount"
-                    android:textColor="#000000" />
-                <TextView
-                    android:id="@+id/amount"
-                    android:layout_marginStart="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/amount"
-                    android:textColor="#000000" />
-            </LinearLayout>
-
+                android:text="@string/category_book"
+                android:textColor="#000000" />
+            <TextView
+                android:id="@+id/amount"
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/amount"
+                android:textColor="#000000" />
         </LinearLayout>
-
     </LinearLayout>
-
-
-
 </androidx.cardview.widget.CardView>

@@ -43,9 +43,7 @@ public class InformationUserActivity extends AppCompatActivity {
             tvGender.setText(user.getGender());
             tvEmail.setText(user.getEmail());
             tvAddress.setText(user.getAddress());
-            System.out.println(user.getImage());
             user.setImage(user.getImage().replace("p:", "ps:"));
-            System.out.println(user.getImage());
             Picasso.get().load(user.getImage()).into(imgAvatar);
         }else{
             Toast.makeText(InformationUserActivity.this, "Load dữ liệu không thành công", Toast.LENGTH_SHORT).show();

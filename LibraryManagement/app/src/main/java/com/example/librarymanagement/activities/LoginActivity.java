@@ -3,6 +3,8 @@ package com.example.librarymanagement.activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
-        if(sessionManager.check()){
+        if (sessionManager.check()) {
             startActivity(intent);
         }
 
@@ -54,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (CheckConnect.isconnected(LoginActivity.this)) {
-                    String userId = edtUserId.getText().toString();
-                    String password = edtPassword.getText().toString();
+                    final String userId = edtUserId.getText().toString();
+                    final String password = edtPassword.getText().toString();
 
                     if (userId.isEmpty() && password.isEmpty()) {
                         Toast.makeText(LoginActivity.this, "Bạn chưa nhập thông tin", Toast.LENGTH_SHORT).show();
@@ -63,7 +65,11 @@ public class LoginActivity extends AppCompatActivity {
                         if (userId.isEmpty() || password.isEmpty()) {
                             Toast.makeText(LoginActivity.this, "Bạn chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
                         } else {
-                            doLogin(userId, password);
+                            if (password.equals("123456")) {
+                                checkPassword(userId, password);
+                            } else {
+                                doLogin(userId, password);
+                            }
                         }
                     }
                 } else {
@@ -96,6 +102,98 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void checkPassword(final String userId, final String password) {
+        RequestQueue queue = Volley.newRequestQueue(getApplication());
+        StringRequest postRequest = new StringRequest(Request.Method.POST, Server.getUser,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals("empty")) {
+                            Toast.makeText(getApplication(), "Thông tin đăng nhập không hợp lệ.", Toast.LENGTH_LONG).show();
+                        } else {
+                            final Dialog dialog = new Dialog(LoginActivity.this);
+                            dialog.setContentView(R.layout.dialog_change_password);
+                            dialog.setCanceledOnTouchOutside(false);
+                            final EditText edtChangePassword = dialog.findViewById(R.id.edtChangePassword);
+                            ImageButton btnAdd = dialog.findViewById(R.id.btnSave);
+                            ImageButton btnCancel = dialog.findViewById(R.id.btnCancel);
+                            btnAdd.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String tempPassword = edtChangePassword.getText().toString();
+                                    if (tempPassword.isEmpty()) {
+                                        Toast.makeText(LoginActivity.this, "Bạn chưa nhập mật khẩu mới", Toast.LENGTH_SHORT).show();
+                                    } else if (tempPassword.equals(password)) {
+                                        Toast.makeText(LoginActivity.this, "Mật khẩu mới trùng với mật khẩu mặc định", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        changePassword(userId, tempPassword);
+                                        dialog.dismiss();
+                                    }
+
+                                }
+                            });
+                            btnCancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            dialog.show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplication(), "Lỗi hệ thống", Toast.LENGTH_LONG).show();
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("userId", userId);
+                params.put("password", password);
+                return params;
+            }
+        };
+        queue.add(postRequest);
+    }
+
+    private void changePassword(final String userId, final String password) {
+        final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+        pd.setMessage("Đang lưu...");
+        pd.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.changePassword,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals("Success")) {
+                            Toast.makeText(getApplication(), "Thay đổi mật khẩu thành công.", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplication(), "Thay đổi mật khẩu thất bại.", Toast.LENGTH_LONG).show();
+                        }
+                        pd.dismiss();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplication(), "Lỗi hệ thống", Toast.LENGTH_LONG).show();
+                pd.dismiss();
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("userId", userId);
+                params.put("password", password);
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
     private void doLogin(final String userId, final String password) {
         RequestQueue queue = Volley.newRequestQueue(getApplication());
         StringRequest postRequest = new StringRequest(Request.Method.POST, Server.getUser,
@@ -109,6 +207,7 @@ public class LoginActivity extends AppCompatActivity {
                             sessionManager.setLogin(true);
                             sessionManager.setRole(role);
                             sessionManager.setUser(Integer.parseInt(userId));
+                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(intent);
                         }

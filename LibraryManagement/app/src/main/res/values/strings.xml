@@ -50,4 +50,8 @@
     <string name="add_category">Thêm thể loại</string>
     <string name="name_category">Tên thể loại</string>
     <string name="edit_category">Chỉnh sửa thể loại</string>
+    <string name="late_book">Sách trễ hạn</string>
+    <string name="book_borrowed_the_most">Sách mượn nhiều nhất</string>
+    <string name="reader_borrowed_the_most">Độc giả mượn nhiều nhất</string>
+    <string name="change_password">Thay đổi mật khẩu cho lần đầu đăng nhập</string>
 </resources>

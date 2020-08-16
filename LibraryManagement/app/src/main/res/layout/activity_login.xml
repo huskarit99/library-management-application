@@ -42,6 +42,7 @@
                     android:layout_gravity="center_horizontal"/>
 
                 <EditText
+                    android:singleLine="true"
                     android:id="@+id/edtUserId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -59,8 +60,10 @@
                     app:passwordToggleEnabled="true"
                     android:layout_marginTop="30dp"
                     android:layout_marginRight="30dp"
-                    android:layout_marginLeft="30dp">
+                    android:layout_marginLeft="30dp"
+                    app:hintEnabled="false">
                     <EditText
+                        android:singleLine="true"
                         android:inputType="textPassword"
                         android:id="@+id/edtPassword"
                         android:layout_width="match_parent"

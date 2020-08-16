@@ -20,4 +20,6 @@ public class Server {
     public static String getRule = "http://" + localhost + "/getrule.php";
 
     public static String editRule = "http://" + localhost + "/updaterule.php";
+
+    public static String changePassword = "http://" + localhost + "/changepassword.php";
 }

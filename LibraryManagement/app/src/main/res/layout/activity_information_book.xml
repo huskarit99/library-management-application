@@ -101,10 +101,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/status"
-                            android:textColor="#00FF00"
+                            android:textColor="#000"
                             android:layout_marginBottom="10dp"/>
                         <TextView
-                            android:id="@+id/typeBook"
+                            android:id="@+id/Category"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/type_book"
@@ -150,21 +150,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/nameAuthor"
+                    android:id="@+id/authors"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/author"
                     android:textColor="#000"
                     android:layout_marginBottom="21dp"/>
                 <TextView
-                    android:id="@+id/namePublisher"
+                    android:id="@+id/publisher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/publisher"
                     android:textColor="#000"
                     android:layout_marginBottom="21dp"/>
                 <TextView
-                    android:id="@+id/publishingYear"
+                    android:id="@+id/publicationYear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/publishing_year"

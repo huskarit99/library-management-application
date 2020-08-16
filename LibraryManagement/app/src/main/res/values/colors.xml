@@ -7,4 +7,6 @@
     <color name="colorIcon">#BB0A21</color>
     <color name="background">#E2E2E2</color>
     <color name="colorText">#FFFFFF</color>
+    <color name="available">#00FF00</color>
+    <color name="notavailable">#BB0A21</color>
 </resources>

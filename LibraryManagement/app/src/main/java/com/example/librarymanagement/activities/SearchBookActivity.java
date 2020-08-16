@@ -1,12 +1,14 @@
 package com.example.librarymanagement.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,11 +16,11 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.librarymanagement.R;
 import com.example.librarymanagement.models.Book;
 import com.example.librarymanagement.models.User;
+import com.example.librarymanagement.networks.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,7 +33,6 @@ public class SearchBookActivity extends AppCompatActivity {
     private SearchView searchBar;
 
     private Button btnNameBook, btnAuthor, btnCategory, btnIdBook;
-
 
     private String keyword = "";
     private int btnNumber = 0;
@@ -50,9 +51,24 @@ public class SearchBookActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Tra cứu sách");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         turnOnButton(btnNameBook);
         updateListView();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(SearchBookActivity.this, InformationBookActivity.class);
+                intent.putExtra("INFOBOOK", listBookLookUp.get(i));
+                startActivity(intent);
+            }
+        });
 
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -87,7 +103,6 @@ public class SearchBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 btnNumber = 1;
-                System.out.println(keyword);
                 turnOffButton(btnNameBook);
                 turnOnButton(btnAuthor);
                 turnOffButton(btnCategory);
@@ -100,7 +115,6 @@ public class SearchBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 btnNumber = 2;
-                System.out.println(keyword);
                 turnOffButton(btnNameBook);
                 turnOffButton(btnAuthor);
                 turnOnButton(btnCategory);
@@ -113,7 +127,6 @@ public class SearchBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 btnNumber = 3;
-                System.out.println(keyword);
                 turnOffButton(btnNameBook);
                 turnOffButton(btnAuthor);
                 turnOffButton(btnCategory);
@@ -230,14 +243,17 @@ public class SearchBookActivity extends AppCompatActivity {
             name.setText(listBookLookUp.get(i).getName());
             author.setText(listBookLookUp.get(i).getAuthors());
             category.setText(listBookLookUp.get(i).getCategory());
-            if (listBookLookUp.get(i).getAmount() == 0)
+            if (listBookLookUp.get(i).getAmount() == 0) {
                 amount.setText("Tạm thời không còn");
-            else
+                amount.setTextColor(getResources().getColor(R.color.notavailable));
+            }
+            else {
                 amount.setText("Có sẵn");
+                amount.setTextColor(getResources().getColor(R.color.available));
+            }
             return view;
         }
     }
-
 
     private void mapping() {
         toolbar = findViewById(R.id.toolbarSearch);

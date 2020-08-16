@@ -160,6 +160,13 @@ public class LibrarianManagerActivity extends AppCompatActivity {
         });
         requestQueue.add(jsonArrayRequest);
     }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
 
     private void mapping() {
         toolbar = findViewById(R.id.toolbarLibrarianManager);

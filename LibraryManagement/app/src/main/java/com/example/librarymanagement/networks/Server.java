@@ -8,4 +8,6 @@ public class Server {
     public static String getUser = "http://" + localhost + "/getuser.php";
 
     public static String getListUser = "http://" + localhost + "/getlistuser.php";
+
+    public static String editUser = "http://" + localhost + "/updateuser.php";
 }

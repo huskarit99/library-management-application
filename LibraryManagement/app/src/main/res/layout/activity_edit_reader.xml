@@ -5,24 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".activities.EditUserActivity">
+    tools:context=".activities.EditReaderActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:clickable="true">
 
     <FrameLayout
-        android:id="@+id/frame_edit_user"
+        android:id="@+id/frame_edit_reader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include
-            android:id="@+id/toolbarInfoBook"
+            android:id="@+id/toolbarEditReader"
             layout="@layout/toolbar" />
     </FrameLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frame_edit_user"
+        android:layout_below="@+id/frame_edit_reader"
         android:scrollbarThumbVertical="@null">
-
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -49,10 +51,10 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/avatarBook"
+                            android:id="@+id/avatarReader"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/image_reader" />
+                            android:src="@drawable/ic_avatar" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -62,7 +64,7 @@
                         android:orientation="vertical">
 
                         <EditText
-                            android:id="@+id/edtUserName"
+                            android:id="@+id/edtNameReader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/user_name"
@@ -83,12 +85,12 @@
                                 android:textColor="#000" />
 
                             <TextView
-                                android:id="@+id/idUser"
+                                android:id="@+id/tvIdReader"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:text="@string/id_user"
-                                android:textColor="#000" />
+                                android:hint="@string/id_user"
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -98,19 +100,35 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:layout_gravity="center_vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
                                 android:text="@string/birthday"
                                 android:textColor="#000" />
-
-                            <EditText
-                                android:id="@+id/birthday"
+                            <LinearLayout
+                                android:layout_marginStart="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
-                                android:hint="@string/birthday"
-                                android:textSize="14sp" />
+                                android:orientation="horizontal"
+                                android:weightSum="4">
+                                <EditText
+                                    android:singleLine="true"
+                                    android:id="@+id/edtBirthdayReader"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="3"
+                                    android:hint="@string/birthday"
+                                    android:textSize="14sp" />
+                                <ImageView
+                                    android:layout_weight="1"
+                                    android:id="@+id/btnCalendar"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_calendar" />
+                            </LinearLayout>
+
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -127,6 +145,7 @@
                                 android:textColor="#000" />
 
                             <RadioGroup
+                                android:id="@+id/radioGroup"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
@@ -136,7 +155,6 @@
                                     android:id="@+id/radioMan"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:checked="true"
                                     android:text="@string/man" />
 
                                 <RadioButton
@@ -171,7 +189,7 @@
                             android:textColor="#000" />
 
                         <EditText
-                            android:id="@+id/edtEmail"
+                            android:id="@+id/edtEmailReader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="31dp"
@@ -193,7 +211,7 @@
                             android:textColor="#000" />
 
                         <EditText
-                            android:id="@+id/edtAddress"
+                            android:id="@+id/edtAddressReader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="22dp"

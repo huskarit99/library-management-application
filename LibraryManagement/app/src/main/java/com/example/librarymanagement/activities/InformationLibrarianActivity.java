@@ -23,6 +23,7 @@ public class InformationLibrarianActivity extends AppCompatActivity {
     TextView tvNameLibrarian, tvIdLibrarian, tvBirthdayLibrarian, tvGenderLibrarian, tvEmailLibrarian, tvAddressLibrarian;
     ImageView imgAvatar;
     User user;
+    public static final String LIBRARIAN = "LIBRARIAN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,9 @@ public class InformationLibrarianActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.edit_data){
-            Intent intent = new Intent(InformationLibrarianActivity.this, AddUserActivity.class);
+            Intent intent = new Intent(InformationLibrarianActivity.this, EditLibrarianActivity.class);
+            intent.putExtra(LIBRARIAN,user);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

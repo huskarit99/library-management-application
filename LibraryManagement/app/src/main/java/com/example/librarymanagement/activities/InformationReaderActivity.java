@@ -23,6 +23,7 @@ public class InformationReaderActivity extends AppCompatActivity {
     TextView tvNameReader, tvIdReader, tvBirthdayReader, tvGenderReader, tvEmailReader, tvAddressReader;
     ImageView imgAvatar;
     User user;
+    public static final String READER = "READER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,9 @@ public class InformationReaderActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.edit_data){
-            Intent intent = new Intent(InformationReaderActivity.this, AddUserActivity.class);
+            Intent intent = new Intent(InformationReaderActivity.this, EditReaderActivity.class);
+            intent.putExtra(READER, user);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

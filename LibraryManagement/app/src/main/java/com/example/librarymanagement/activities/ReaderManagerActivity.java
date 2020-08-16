@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -106,7 +107,6 @@ public class ReaderManagerActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     @Override
@@ -164,6 +164,14 @@ public class ReaderManagerActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(jsonArrayRequest);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     private void mapping() {

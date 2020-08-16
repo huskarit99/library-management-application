@@ -60,7 +60,7 @@
                             android:textColor="#000"
                             android:textSize="18sp" />
                         <ImageButton
-                            android:id="@+id/btnSave"
+                            android:id="@+id/btnSaveRule"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ic_black_save"

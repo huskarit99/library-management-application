@@ -55,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
                                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                                 sessionManager.clear();
                                 startActivity(intent);
+                                onDestroy();
                             }
                         })
                         .setNegativeButton("Cancel", null);

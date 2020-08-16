@@ -16,4 +16,8 @@ public class Server {
     public static String addCategory = "http://" + localhost + "/addcategory.php";
 
     public static String editCategory = "http://" + localhost + "/updatecategory.php";
+
+    public static String getRule = "http://" + localhost + "/getrule.php";
+
+    public static String editRule = "http://" + localhost + "/updaterule.php";
 }

@@ -42,4 +42,12 @@
     <string name="id_librarian">Mã thủ thư</string>
     <string name="list_empty">Danh sách rỗng</string>
     <string name="refresh">Làm mới</string>
+    <string name="borrowed_book_rule">Quy định việc mượn sách</string>
+    <string name="max_day">Số ngày mượn tối đa</string>
+    <string name="max_book">Số sách mượn tối đa</string>
+    <string name="fine">Tiền phạt</string>
+    <string name="type_book_rule">Quy định thể loại sách</string>
+    <string name="add_category">Thêm thể loại</string>
+    <string name="name_category">Tên thể loại</string>
+    <string name="edit_category">Chỉnh sửa thể loại</string>
 </resources>

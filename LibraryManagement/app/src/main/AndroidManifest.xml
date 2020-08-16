@@ -13,13 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.EditReaderActivity"
+        <activity android:name=".activities.ChangeRuleActivity"></activity>
+        <activity
+            android:name=".activities.EditReaderActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.LibrarianManagerActivity"
+        <activity
+            android:name=".activities.LibrarianManagerActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.InformationLibrarianActivity"
+        <activity
+            android:name=".activities.InformationLibrarianActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.ReaderManagerActivity"
+        <activity
+            android:name=".activities.ReaderManagerActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.StatisticActivity" />
         <activity android:name=".activities.BorrowManagerActivity" />
@@ -28,7 +33,8 @@
         <activity
             android:name=".activities.HomeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.InformationReaderActivity"
+        <activity
+            android:name=".activities.InformationReaderActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.AddBookActivity" />
         <activity android:name=".activities.EditBookActivity" />

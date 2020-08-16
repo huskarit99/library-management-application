@@ -70,7 +70,6 @@ public class UserAdapter extends BaseAdapter {
         holder.tvBirthday.setText(listUser.get(position).getBirthday());
         Picasso.get().load(listUser.get(position).getImage()).into(holder.imgAvatar);
 
-
         return rowView;
     }
 }

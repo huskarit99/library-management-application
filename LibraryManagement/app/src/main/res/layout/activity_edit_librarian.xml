@@ -189,6 +189,7 @@
                             android:textColor="#000" />
 
                         <EditText
+                            android:singleLine="true"
                             android:id="@+id/edtEmailLibrarian"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -211,6 +212,7 @@
                             android:textColor="#000" />
 
                         <EditText
+                            android:singleLine="true"
                             android:id="@+id/edtAddressLibrarian"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

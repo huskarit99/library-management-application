@@ -342,6 +342,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/lnRule"
                             android:background="@drawable/custom_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"

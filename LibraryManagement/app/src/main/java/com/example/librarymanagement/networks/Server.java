@@ -10,4 +10,10 @@ public class Server {
     public static String getListUser = "http://" + localhost + "/getlistuser.php";
 
     public static String editUser = "http://" + localhost + "/updateuser.php";
+
+    public static String getListCategory = "http://" + localhost + "/getallcategories.php";
+
+    public static String addCategory = "http://" + localhost + "/addcategory.php";
+
+    public static String editCategory = "http://" + localhost + "/updatecategory.php";
 }

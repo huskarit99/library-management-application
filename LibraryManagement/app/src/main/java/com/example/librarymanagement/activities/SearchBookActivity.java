@@ -37,6 +37,7 @@ public class SearchBookActivity extends AppCompatActivity {
     private int btnNumber = 0;
     ArrayList<Book> listBook, listBookLookUp;
 
+    private CustomAdapterBook customAdapterBook;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +52,7 @@ public class SearchBookActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         turnOnButton(btnNameBook);
+        updateListView();
 
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -63,7 +65,7 @@ public class SearchBookActivity extends AppCompatActivity {
                 if (s.equals(""))
                     keyword="";
                 else
-                    keyword = s;
+                    keyword = new NormalizeString(s).getNormalizeString();
                 searchNewText();
                 return false;
             }
@@ -119,8 +121,6 @@ public class SearchBookActivity extends AppCompatActivity {
                 searchByIdBook();
             }
         });
-        CustomAdapterBook customAdapterBook = new CustomAdapterBook();
-        listView.setAdapter(customAdapterBook);
     }
 
     private void searchNewText() {
@@ -140,21 +140,30 @@ public class SearchBookActivity extends AppCompatActivity {
         }
     }
 
+    private void updateListView(){
+        customAdapterBook = new CustomAdapterBook();
+        listView.setAdapter(customAdapterBook);
+    }
+
     private void searchByNameBook() {
         listBookLookUp = new ArrayList<>();
         for (int i = 0; i < listBook.size(); i++){
-            if (listBook.get(i).getName().contains(keyword)){
+            String normalizeString = new NormalizeString(listBook.get(i).getName()).getNormalizeString();
+            if (normalizeString.contains(keyword)){
                 listBookLookUp.add(listBook.get(i));
             }
         }
+        updateListView();
     }
     private void searchByAuthor() {
         listBookLookUp = new ArrayList<>();
         for (int i = 0; i < listBook.size(); i++){
-            if (listBook.get(i).getAuthors().contains(keyword)){
+            String normalizeString = new NormalizeString(listBook.get(i).getAuthors()).getNormalizeString();
+            if (normalizeString.contains(keyword)){
                 listBookLookUp.add(listBook.get(i));
             }
         }
+        updateListView();
     }
     private void searchByIdBook() {
         listBookLookUp = new ArrayList<>();
@@ -163,14 +172,17 @@ public class SearchBookActivity extends AppCompatActivity {
                 listBookLookUp.add(listBook.get(i));
             }
         }
+        updateListView();
     }
     private void searchByCategory() {
         listBookLookUp = new ArrayList<>();
         for (int i = 0; i < listBook.size(); i++){
-            if (listBook.get(i).getCategory().contains(keyword)){
+            String normalizeString = new NormalizeString(listBook.get(i).getCategory()).getNormalizeString();
+            if (normalizeString.contains(keyword)){
                 listBookLookUp.add(listBook.get(i));
             }
         }
+        updateListView();
     }
 
     private void turnOnButton(Button btn){

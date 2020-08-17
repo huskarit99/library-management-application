@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,6 @@ import android.widget.TextView;
 
 import com.example.librarymanagement.R;
 import com.example.librarymanagement.models.Book;
-import com.example.librarymanagement.models.User;
-import com.example.librarymanagement.networks.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,10 +28,12 @@ public class SearchBookActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ListView listView;
     private SearchView searchBar;
+    private ImageView addBook;
 
     private Button btnNameBook, btnAuthor, btnCategory, btnIdBook;
 
     private String keyword = "";
+    private String BEFORE = "";
     private int btnNumber = 0;
     ArrayList<Book> listBook, listBookLookUp;
 
@@ -43,13 +42,21 @@ public class SearchBookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_book);
+        mapping();
 
         Intent intent = getIntent();
         listBook =  (ArrayList<Book>)intent.getSerializableExtra(HomeActivity.BOOK);
         listBookLookUp = new ArrayList<Book>(listBook);
-        mapping();
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Tra cứu sách");
+        if (valueOf(intent.getSerializableExtra("BEFORE")).equals("SEARCH")) {
+            getSupportActionBar().setTitle("Tra cứu sách");
+            BEFORE = "SEARCH";
+            addBook.setVisibility(View.GONE);
+        }
+        else {
+            BEFORE = "MANAGEMENT";
+            getSupportActionBar().setTitle("Quản lý sách");
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,13 +65,24 @@ public class SearchBookActivity extends AppCompatActivity {
             }
         });
 
+
+
         turnOnButton(btnNameBook);
         updateListView();
+
+        addBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SearchBookActivity.this, AddBookActivity.class);
+                startActivity(intent);
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(SearchBookActivity.this, InformationBookActivity.class);
+                intent.putExtra("BEFORE", BEFORE);
                 intent.putExtra("INFOBOOK", listBookLookUp.get(i));
                 startActivity(intent);
             }
@@ -263,5 +281,6 @@ public class SearchBookActivity extends AppCompatActivity {
         btnIdBook = findViewById(R.id.btnIdBook);
         btnNameBook = findViewById(R.id.btnNameBook);
         searchBar = findViewById(R.id.searchBar);
+        addBook = findViewById(R.id.addBook);
     }
 }

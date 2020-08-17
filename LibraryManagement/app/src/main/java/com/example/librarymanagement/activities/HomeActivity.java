@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     LinearLayout linearLogout,linearInfo;
     SessionManager sessionManager;
     CardView cardViewLibrarian, cardViewAdmin;
-    ImageButton searchBook;
+    ImageButton searchBook, bookManager;
     User user;
     String url;
     static boolean count;
@@ -128,6 +128,17 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, SearchBookActivity.class);
                 intent.putExtra(BOOK, listBook);
+                intent.putExtra("BEFORE", "SEARCH");
+                startActivity(intent);
+            }
+        });
+
+        bookManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, SearchBookActivity.class);
+                intent.putExtra(BOOK, listBook);
+                intent.putExtra("BEFORE", "MANAGEMENT");
                 startActivity(intent);
             }
         });
@@ -369,6 +380,7 @@ public class HomeActivity extends AppCompatActivity {
         linearLogout = findViewById(R.id.lnLogout);
         linearInfo = findViewById(R.id.lnInfo);
         searchBook = findViewById(R.id.searchBook);
+        bookManager = findViewById(R.id.bookManager);
         cardViewLibrarian = findViewById(R.id.cardViewLibrarian);
         cardViewAdmin = findViewById(R.id.cardViewAdmin);
     }

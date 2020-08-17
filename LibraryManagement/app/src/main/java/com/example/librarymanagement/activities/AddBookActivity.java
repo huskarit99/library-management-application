@@ -31,7 +31,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.librarymanagement.R;
-import com.example.librarymanagement.networks.CheckConnect;
 import com.example.librarymanagement.networks.Server;
 
 import org.json.JSONArray;
@@ -68,6 +67,12 @@ public class AddBookActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Thêm sách");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         edtImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,82 +176,74 @@ public class AddBookActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(CheckConnect.isconnected(AddBookActivity.this)){
-            if(item.getItemId() == R.id.save_data) {
-                book_name = edtBookName.getText().toString();
-                publishing_year = edtPublishingYear.getText().toString();
-                final String amount = "1";
-                if (book_name == "" || publishing_year == "" || image == "" || publisher == "" || category == "" || selectedAuthors.length() == 0) {
-                    Toast.makeText(AddBookActivity.this, "Bạn đã cung cấp thiếu thông tin !!!", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                        RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDBOOK,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        Toast.makeText(AddBookActivity.this, "Cập nhật dữ liệu thành công", Toast.LENGTH_SHORT).show();
+        if(item.getItemId() == R.id.save_data) {
+            book_name = edtBookName.getText().toString();
+            publishing_year = edtPublishingYear.getText().toString();
+            final String amount = "1";
+            if (book_name == "" || publishing_year == "" || image == "" || publisher == "" || category == "" || selectedAuthors.length() == 0) {
+                Toast.makeText(AddBookActivity.this, "Bạn đã cung cấp thiếu thông tin !!!", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                    RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDBOOK,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Toast.makeText(AddBookActivity.this, "Cập nhật dữ liệu thành công", Toast.LENGTH_SHORT).show();
 //                                finish();
-                                    }
-                                },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Toast.makeText(AddBookActivity.this, "Cập nhật dữ liệu thất bại", Toast.LENGTH_SHORT).show();
-                                    }
-                                }) {
-                            @Override
-                            protected Map<String, String> getParams() {
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put("bookname", book_name);
-                                params.put("publicationyear", publishing_year);
-                                params.put("image", image);
-                                params.put("publisher", publisher);
-                                params.put("category", category);
-                                params.put("authors", selectedAuthors.toString());
-                                params.put("amount", amount);
-                                return params;
-                            }
-                        };
-                        requestQueue.add(stringRequest);
-                    }
-                } else {
-                    Toast.makeText(AddBookActivity.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(AddBookActivity.this, "Cập nhật dữ liệu thất bại", Toast.LENGTH_SHORT).show();
+                                }
+                            }) {
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("bookname", book_name);
+                            params.put("publicationyear", publishing_year);
+                            params.put("image", image);
+                            params.put("publisher", publisher);
+                            params.put("category", category);
+                            params.put("authors", selectedAuthors.toString());
+                            params.put("amount", amount);
+                            return params;
+                        }
+                    };
+                    requestQueue.add(stringRequest);
                 }
             }
         return super.onOptionsItemSelected(item);
     }
 
     public void getAuthors(){
-        if(CheckConnect.isconnected(AddBookActivity.this)) {
-            RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-            JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLAUTHORS, null,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            authors_name = new String[response.length()];
-                            authors_id = new Integer[response.length()];
-                             for (int i = 0; i < response.length(); i++){
-                                try {
-                                    JSONObject jsonObject = response.getJSONObject(i);
-                                    authors_name[i] = jsonObject.getString("name");
-                                    authors_id[i] = Integer.parseInt(jsonObject.getString("author_id"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+        JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLAUTHORS, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        authors_name = new String[response.length()];
+                        authors_id = new Integer[response.length()];
+                         for (int i = 0; i < response.length(); i++){
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                authors_name[i] = jsonObject.getString("name");
+                                authors_id[i] = Integer.parseInt(jsonObject.getString("author_id"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(AddBookActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            requestQueue.add(arrayReq);
-        }else{
-            Toast.makeText(AddBookActivity.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
-        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(AddBookActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        requestQueue.add(arrayReq);
     }
 
     public void selectAuthors(){
@@ -317,35 +314,31 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     public void getCategory(){
-        if(CheckConnect.isconnected(AddBookActivity.this)) {
-            final RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-            JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLCATEGORIES, null,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            categories_name = new String[response.length()];
-                            categories_id = new Integer[response.length()];
-                            for (int i = 0; i < response.length(); i++){
-                                try {
-                                    JSONObject jsonObject = response.getJSONObject(i);
-                                    categories_name[i] = jsonObject.getString("name");
-                                    categories_id[i] = Integer.parseInt(jsonObject.getString("category_id"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+        final RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+        JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLCATEGORIES, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        categories_name = new String[response.length()];
+                        categories_id = new Integer[response.length()];
+                        for (int i = 0; i < response.length(); i++){
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                categories_name[i] = jsonObject.getString("name");
+                                categories_id[i] = Integer.parseInt(jsonObject.getString("category_id"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(AddBookActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            requestQueue.add(arrayReq);
-        }else{
-            Toast.makeText(AddBookActivity.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
-        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(AddBookActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        requestQueue.add(arrayReq);
     }
 
     public void selectCategory(){
@@ -381,35 +374,31 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     public void getPublisher(){
-        if(CheckConnect.isconnected(AddBookActivity.this)) {
-            RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-            JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLPUBLISHERS, null,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            publishers_name = new String[response.length()];
-                            publishers_id = new Integer[response.length()];
-                            for (int i = 0; i < response.length(); i++){
-                                try {
-                                    JSONObject jsonObject = response.getJSONObject(i);
-                                    publishers_name[i] = jsonObject.getString("name");
-                                    publishers_id[i] = Integer.parseInt(jsonObject.getString("publisher_id"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+        JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLPUBLISHERS, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        publishers_name = new String[response.length()];
+                        publishers_id = new Integer[response.length()];
+                        for (int i = 0; i < response.length(); i++){
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                publishers_name[i] = jsonObject.getString("name");
+                                publishers_id[i] = Integer.parseInt(jsonObject.getString("publisher_id"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(AddBookActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            requestQueue.add(arrayReq);
-        }else{
-            Toast.makeText(AddBookActivity.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
-        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(AddBookActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        requestQueue.add(arrayReq);
     }
 
     public void selectPublisher(){

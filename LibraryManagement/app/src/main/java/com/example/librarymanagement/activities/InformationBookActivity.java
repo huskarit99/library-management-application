@@ -15,8 +15,6 @@ import com.squareup.picasso.Picasso;
 
 import static java.lang.String.valueOf;
 
-import java.util.ArrayList;
-
 public class InformationBookActivity extends AppCompatActivity {
 
     Toolbar toolbar;

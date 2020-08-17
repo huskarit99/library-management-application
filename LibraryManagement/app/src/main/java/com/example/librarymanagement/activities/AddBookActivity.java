@@ -179,6 +179,7 @@ public class AddBookActivity extends AppCompatActivity {
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
+                System.out.println(picturePath);
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
                 Log.w("path of image from gallery......******************.........", picturePath + "");
                 edtImage.setImageBitmap(thumbnail);
@@ -362,12 +363,11 @@ public class AddBookActivity extends AppCompatActivity {
             mapCategories.put(categories_name[i], categories_id[i]);
         Arrays.sort(categories_name);
         category = mapCategories.get(categories_name[0]).toString();
-        String tmp = "";
         builder.setSingleChoiceItems(categories_name, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int position) {
                 edtCategory.setText(categories_name[position]);
-                category = valueOf(mapCategories.get(edtCategory.getText()));
+                category = valueOf(mapCategories.get(categories_name[position]));
             }
         });
         builder.setCancelable(false);

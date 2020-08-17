@@ -231,7 +231,7 @@ public class HomeActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(HomeActivity.this,"Không lấy được dữ kiệu người dùng",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this,"Không lấy được dữ kiệu người dùng 1",Toast.LENGTH_SHORT).show();
                     }
                 });
         requestQueue.add(jsonArrayRequest);
@@ -268,7 +268,7 @@ public class HomeActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(HomeActivity.this,"Không lấy được dữ kiệu người dùng",Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this,"Không lấy được dữ kiệu người dùng 2",Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonArrayRequest);
@@ -421,13 +421,7 @@ public class HomeActivity extends AppCompatActivity {
                             }
                         }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(HomeActivity.this,"Không lấy được dữ kiệu người dùng",Toast.LENGTH_SHORT).show();
-                    }
-                });
+                }, null);
         requestQueue.add(jsonArrayRequest);
     }
 

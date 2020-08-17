@@ -83,6 +83,7 @@ public class BorrowedBookActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
+            System.out.println(listBorrowedBook.size());
             return listBorrowedBook.size();
         }
 
@@ -108,6 +109,7 @@ public class BorrowedBookActivity extends AppCompatActivity {
             TextView payDate = view.findViewById(R.id.payDate);
 
             String path = listBorrowedBook.get(i).getImage();
+            System.out.println(path);
             path.replace("p:", "ps:");
             Picasso.get().load(path).into(image);
             name.setText(listBorrowedBook.get(i).getName());
@@ -119,4 +121,3 @@ public class BorrowedBookActivity extends AppCompatActivity {
         }
     }
 }
-

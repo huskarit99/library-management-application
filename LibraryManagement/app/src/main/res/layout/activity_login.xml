@@ -46,7 +46,7 @@
                     android:id="@+id/edtUserId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Tài khoản"
+                    android:hint="@string/account"
                     android:layout_marginTop="50dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
@@ -68,7 +68,7 @@
                         android:id="@+id/edtPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Mật khẩu"
+                        android:hint="@string/password"
                         android:padding="10dp"
                         android:background="@drawable/edit_login"
                         />

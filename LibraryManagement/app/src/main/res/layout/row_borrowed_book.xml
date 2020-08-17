@@ -92,14 +92,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pay_date"
+                    android:text="@string/give_back_date"
                     android:textColor="#000000" />
                 <TextView
                     android:id="@+id/payDate"
                     android:layout_marginStart="35dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pay_date"
+                    android:text="@string/give_back_date"
                     android:textColor="#000000" />
             </LinearLayout>
 

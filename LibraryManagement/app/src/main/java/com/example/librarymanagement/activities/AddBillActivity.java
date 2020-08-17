@@ -4,25 +4,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.librarymanagement.R;
 
-public class BorrowManagerActivity extends AppCompatActivity {
-
+public class AddBillActivity extends AppCompatActivity {
     Toolbar toolbar;
+    TextView tvUserName, tvBorrowDate, tvGiveBackDate, tvBookName;
+    EditText edtIdUser, edtIdBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_borrow_manager);
+        setContentView(R.layout.activity_add_bill);
         mapping();
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Quản lý thẻ mượn");
+        getSupportActionBar().setTitle("Thêm thẻ mượn");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,20 +36,26 @@ public class BorrowManagerActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add, menu);
+        getMenuInflater().inflate(R.menu.menu_add_save, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.add_data){
-            Intent intent = new Intent(BorrowManagerActivity.this, AddBillActivity.class);
-            startActivity(intent);
+        if(item.getItemId() == R.id.save_data){
+
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void mapping() {
-        toolbar = findViewById(R.id.toolbarBorrowedManager);
+        toolbar = findViewById(R.id.toolbarBill);
+        edtIdUser = findViewById(R.id.edtIdUser);
+        tvUserName = findViewById(R.id.tvUserName);
+        tvBorrowDate = findViewById(R.id.tvBorrowDate);
+        tvGiveBackDate = findViewById(R.id.tvGiveBackDate);
+        edtIdBook = findViewById(R.id.edtIdBook);
+        tvBookName = findViewById(R.id.tvBookName);
     }
+
 }

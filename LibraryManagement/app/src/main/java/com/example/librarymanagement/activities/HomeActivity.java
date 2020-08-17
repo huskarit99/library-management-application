@@ -45,7 +45,7 @@ import static java.lang.String.valueOf;
 public class HomeActivity extends AppCompatActivity {
     Toolbar toolbarHome;
     LinearLayout linearLogout, linearInfo, linearReaderManager, linearLibrarianManager, linearRule, linearSearchBook, linearBookManager,
-    linearBill, linearBorrowedBook;
+            linearBill, linearBorrowedBook;
 
     SessionManager sessionManager;
     CardView cardViewLibrarian, cardViewAdmin;
@@ -172,7 +172,8 @@ public class HomeActivity extends AppCompatActivity {
         linearBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(HomeActivity.this, BorrowManagerActivity.class);
+                startActivity(intent);
             }
         });
         linearBorrowedBook.setOnClickListener(new View.OnClickListener() {
@@ -232,7 +233,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(HomeActivity.this,"Không lấy được dữ kiệu người dùng",Toast.LENGTH_SHORT).show();
                     }
-        });
+                });
         requestQueue.add(jsonArrayRequest);
     }
 
@@ -342,9 +343,9 @@ public class HomeActivity extends AppCompatActivity {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
                                 listCategory.add(new Category(
-                                                Integer.parseInt(jsonObject.getString("category_id")),
-                                                jsonObject.getString("name")
-                                        ));
+                                        Integer.parseInt(jsonObject.getString("category_id")),
+                                        jsonObject.getString("name")
+                                ));
                                 mappingCategory.put(listCategory.get(i).getCategory_id(), listCategory.get(i).getName());
                             } catch (JSONException e) {
                                 e.printStackTrace();

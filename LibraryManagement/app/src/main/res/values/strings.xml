@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Library Management</string>
 
+    <string name="account">Tài khoản</string>
+    <string name="password">Mật khẩu</string>
     <string name="book_name">Tên sách</string>
     <string name="id_book">Mã sách</string>
     <string name="status">Tình trạng</string>
@@ -34,7 +36,7 @@
 
     <string name="id_bill">Mã phiếu</string>
     <string name="borrow_date">Ngày mượn</string>
-    <string name="pay_date">Ngày trả</string>
+    <string name="give_back_date">Ngày trả</string>
 
     <string name="save">Lưu</string>
     <string name="quantum">Số lượng</string>
@@ -56,4 +58,6 @@
     <string name="book_borrowed_the_most">Sách mượn nhiều nhất</string>
     <string name="reader_borrowed_the_most">Độc giả mượn nhiều nhất</string>
     <string name="change_password">Thay đổi mật khẩu cho lần đầu đăng nhập</string>
+    <string name="name_reader">Tên độc giả</string>
+
 </resources>

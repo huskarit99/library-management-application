@@ -38,4 +38,22 @@
 
     <string name="save">Lưu</string>
     <string name="quantum">Số lượng</string>
+    <string name="add">Thêm</string>
+    <string name="edit">Chỉnh sửa</string>
+
+    <string name="id_librarian">Mã thủ thư</string>
+    <string name="list_empty">Danh sách rỗng</string>
+    <string name="refresh">Làm mới</string>
+    <string name="borrowed_book_rule">Quy định việc mượn sách</string>
+    <string name="max_day">Số ngày mượn tối đa</string>
+    <string name="max_book">Số sách mượn tối đa</string>
+    <string name="fine">Tiền phạt</string>
+    <string name="type_book_rule">Quy định thể loại sách</string>
+    <string name="add_category">Thêm thể loại</string>
+    <string name="name_category">Tên thể loại</string>
+    <string name="edit_category">Chỉnh sửa thể loại</string>
+    <string name="late_book">Sách trễ hạn</string>
+    <string name="book_borrowed_the_most">Sách mượn nhiều nhất</string>
+    <string name="reader_borrowed_the_most">Độc giả mượn nhiều nhất</string>
+    <string name="change_password">Thay đổi mật khẩu cho lần đầu đăng nhập</string>
 </resources>

@@ -48,10 +48,13 @@
                         android:weightSum="2"
                         android:layout_marginBottom="40dp">
                         <LinearLayout
+                            android:id="@+id/lnSearchBook"
+                            android:background="@drawable/custom_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:focusable="true">
 
                             <ImageButton
                                 android:id="@+id/searchBook"
@@ -59,7 +62,8 @@
                                 android:layout_height="90dp"
                                 android:layout_gravity="center_horizontal"
                                 android:background="@drawable/btn_menu"
-                                android:src="@drawable/ic_search_book"/>
+                                android:src="@drawable/ic_search_book"
+                                android:clickable="false"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -72,11 +76,12 @@
 
                         <LinearLayout
                             android:id="@+id/lnInfo"
+                            android:background="@drawable/custom_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:layout_weight="1"
-                            android:clickable="true">
+                            android:focusable="true">
                             <ImageButton
                                 android:layout_gravity="center_horizontal"
                                 android:layout_width="90dp"
@@ -102,10 +107,12 @@
                         android:orientation="horizontal"
                         android:weightSum="2">
                         <LinearLayout
+                            android:background="@drawable/custom_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:focusable="false">
                             <ImageButton
                                 android:layout_gravity="center_horizontal"
                                 android:layout_width="90dp"
@@ -113,6 +120,7 @@
                                 android:background="@drawable/btn_menu"
                                 android:id="@+id/BorrowedBook"
                                 android:src="@drawable/ic_borrowed_book"
+                                android:clickable="false"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -124,12 +132,13 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:background="@drawable/custom_button"
                             android:id="@+id/lnLogout"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:layout_weight="1"
-                            android:clickable="true">
+                            android:focusable="true">
                             <ImageButton
                                 android:layout_gravity="center_horizontal"
                                 android:layout_width="90dp"
@@ -173,10 +182,13 @@
                         android:weightSum="2"
                         android:layout_marginBottom="40dp">
                         <LinearLayout
+                            android:id="@+id/lnBookManager"
+                            android:background="@drawable/custom_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:focusable="true">
                             <ImageButton
                                 android:id="@+id/bookManager"
                                 android:layout_gravity="center_horizontal"
@@ -184,6 +196,7 @@
                                 android:layout_height="90dp"
                                 android:background="@drawable/btn_menu"
                                 android:src="@drawable/ic_book_manager"
+                                android:clickable="false"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -195,10 +208,13 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/lnReaderManager"
+                            android:background="@drawable/custom_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:focusable="true">
                             <ImageButton
                                 android:id="@+id/readerManager"
                                 android:layout_gravity="center_horizontal"
@@ -206,6 +222,7 @@
                                 android:layout_height="90dp"
                                 android:background="@drawable/btn_menu"
                                 android:src="@drawable/ic_reader_manager"
+                                android:clickable="false"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -224,10 +241,13 @@
                         android:orientation="horizontal"
                         android:weightSum="2">
                         <LinearLayout
+                            android:id="@+id/lnBill"
+                            android:background="@drawable/custom_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:focusable="true">
                             <ImageButton
                                 android:layout_gravity="center_horizontal"
                                 android:layout_width="90dp"
@@ -235,6 +255,7 @@
                                 android:background="@drawable/btn_menu"
                                 android:src="@drawable/ic_borrow_bill"
                                 android:id="@+id/borrowedBill"
+                                android:clickable="false"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -246,10 +267,12 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:background="@drawable/custom_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:focusable="true">
 
                             <ImageButton
                                 android:id="@+id/statistic"
@@ -257,7 +280,8 @@
                                 android:layout_height="90dp"
                                 android:layout_gravity="center_horizontal"
                                 android:background="@drawable/btn_menu"
-                                android:src="@drawable/ic_statistic" />
+                                android:src="@drawable/ic_statistic"
+                                android:clickable="false"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -279,7 +303,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp">
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="30dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -287,16 +312,20 @@
                     android:layout_margin="25dp">
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="2"
                         android:layout_marginBottom="40dp">
                         <LinearLayout
+                            android:id="@+id/lnLibrarianManager"
+                            android:background="@drawable/custom_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:focusable="true">
                             <ImageButton
                                 android:layout_gravity="center_horizontal"
                                 android:layout_width="90dp"
@@ -304,6 +333,7 @@
                                 android:background="@drawable/btn_menu"
                                 android:id="@+id/librarianManager"
                                 android:src="@drawable/ic_librarian_manager"
+                                android:clickable="false"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -315,10 +345,13 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/lnRule"
+                            android:background="@drawable/custom_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:focusable="true">
                             <ImageButton
                                 android:layout_gravity="center_horizontal"
                                 android:layout_width="90dp"
@@ -326,6 +359,7 @@
                                 android:background="@drawable/btn_menu"
                                 android:id="@+id/rule"
                                 android:src="@drawable/ic_change_rule"
+                                android:clickable="false"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -42,7 +41,9 @@ import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
     Toolbar toolbarHome;
-    LinearLayout linearLogout,linearInfo;
+    LinearLayout linearLogout, linearInfo, linearReaderManager, linearLibrarianManager, linearRule, linearSearchBook, linearBookManager,
+    linearBill;
+
     SessionManager sessionManager;
     CardView cardViewLibrarian, cardViewAdmin;
     ImageButton searchBook, bookManager;
@@ -78,11 +79,11 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbarHome);
         getSupportActionBar().setTitle("Trang chủ");
 
-        if(sessionManager.getRole()==1){
+        if (sessionManager.getRole() == 1) {
             cardViewLibrarian.setVisibility(View.GONE);
             cardViewAdmin.setVisibility(View.GONE);
-        }else{
-            if(sessionManager.getRole()==2){
+        } else {
+            if (sessionManager.getRole() == 2) {
                 cardViewAdmin.setVisibility(View.GONE);
             }
         }
@@ -103,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent  intent = new Intent(HomeActivity.this, LoginActivity.class);
+                                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                                 sessionManager.clear();
                                 startActivity(intent);
                                 onDestroy();
@@ -122,8 +123,29 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        linearReaderManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, ReaderManagerActivity.class);
+                startActivity(intent);
+            }
+        });
+        linearLibrarianManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, LibrarianManagerActivity.class);
+                startActivity(intent);
+            }
+        });
+        linearRule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, ChangeRuleActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        searchBook.setOnClickListener(new View.OnClickListener(){
+        linearSearchBook.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, SearchBookActivity.class);
@@ -133,13 +155,19 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        bookManager.setOnClickListener(new View.OnClickListener() {
+        linearBookManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, SearchBookActivity.class);
                 intent.putExtra(BOOK, listBook);
                 intent.putExtra("BEFORE", "MANAGEMENT");
                 startActivity(intent);
+            }
+        });
+        linearBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -358,15 +386,15 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-       if(!count){
-           count = true;
-           Toast.makeText(HomeActivity.this, "Chạm lần nữa để thoát", Toast.LENGTH_SHORT).show();
-       }else{
-           Intent startMain = new Intent(Intent.ACTION_MAIN);
-           startMain.addCategory(Intent.CATEGORY_HOME);
-           startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-           startActivity(startMain);
-       }
+        if (!count) {
+            count = true;
+            Toast.makeText(HomeActivity.this, "Chạm lần nữa để thoát", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
+        }
     }
 
     @Override
@@ -375,12 +403,19 @@ public class HomeActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+
     private void mapping() {
         toolbarHome = findViewById(R.id.toolbarHome);
         linearLogout = findViewById(R.id.lnLogout);
         linearInfo = findViewById(R.id.lnInfo);
         searchBook = findViewById(R.id.searchBook);
         bookManager = findViewById(R.id.bookManager);
+        linearReaderManager = findViewById(R.id.lnReaderManager);
+        linearLibrarianManager = findViewById(R.id.lnLibrarianManager);
+        linearRule = findViewById(R.id.lnRule);
+        linearSearchBook = findViewById(R.id.lnSearchBook);
+        linearBookManager = findViewById(R.id.lnBookManager);
+        linearBill = findViewById(R.id.lnBill);
         cardViewLibrarian = findViewById(R.id.cardViewLibrarian);
         cardViewAdmin = findViewById(R.id.cardViewAdmin);
     }

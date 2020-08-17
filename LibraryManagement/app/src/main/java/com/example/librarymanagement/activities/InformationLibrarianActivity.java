@@ -17,21 +17,21 @@ import com.example.librarymanagement.R;
 import com.example.librarymanagement.models.User;
 import com.squareup.picasso.Picasso;
 
-public class InformationReaderActivity extends AppCompatActivity {
+public class InformationLibrarianActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    TextView tvNameReader, tvIdReader, tvBirthdayReader, tvGenderReader, tvEmailReader, tvAddressReader;
+    TextView tvNameLibrarian, tvIdLibrarian, tvBirthdayLibrarian, tvGenderLibrarian, tvEmailLibrarian, tvAddressLibrarian;
     ImageView imgAvatar;
     User user;
-    public static final String READER = "READER";
+    public static final String LIBRARIAN = "LIBRARIAN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_information_reader);
+        setContentView(R.layout.activity_information_librarian);
         mapping();
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Thông tin độc giả");
+        getSupportActionBar().setTitle("Thông tin thủ thư");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,20 +40,19 @@ public class InformationReaderActivity extends AppCompatActivity {
             }
         });
         Intent intent = getIntent();
-        user = (User) intent.getSerializableExtra(ReaderManagerActivity.READER);
+        user = (User) intent.getSerializableExtra(LibrarianManagerActivity.LIBRARIAN);
         if(user!=null){
-            tvNameReader.setText(user.getName());
-            tvIdReader.setText(String.valueOf(user.getUser_id()));
-            tvBirthdayReader.setText(user.getBirthday());
-            tvGenderReader.setText(user.getGender());
-            tvEmailReader.setText(user.getEmail());
-            tvAddressReader.setText(user.getAddress());
+            tvNameLibrarian.setText(user.getName());
+            tvIdLibrarian.setText(String.valueOf(user.getUser_id()));
+            tvBirthdayLibrarian.setText(user.getBirthday());
+            tvGenderLibrarian.setText(user.getGender());
+            tvEmailLibrarian.setText(user.getEmail());
+            tvAddressLibrarian.setText(user.getAddress());
             Picasso.get().load(user.getImage()).into(imgAvatar);
         }else{
-            Toast.makeText(InformationReaderActivity.this, "Load dữ liệu không thành công", Toast.LENGTH_SHORT).show();
+            Toast.makeText(InformationLibrarianActivity.this, "Load dữ liệu không thành công", Toast.LENGTH_SHORT).show();
         }
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_edit, menu);
@@ -63,21 +62,21 @@ public class InformationReaderActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.edit_data){
-            Intent intent = new Intent(InformationReaderActivity.this, EditReaderActivity.class);
-            intent.putExtra(READER, user);
+            Intent intent = new Intent(InformationLibrarianActivity.this, EditLibrarianActivity.class);
+            intent.putExtra(LIBRARIAN,user);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void mapping() {
-        toolbar = findViewById(R.id.toolbarInfoReader);
-        tvNameReader = findViewById(R.id.tvNameReader);
-        tvIdReader = findViewById(R.id.tvIdReader);
-        tvBirthdayReader = findViewById(R.id.tvBirthdayReader);
-        tvGenderReader = findViewById(R.id.tvGenderReader);
-        tvEmailReader = findViewById(R.id.tvEmailReader);
-        tvAddressReader = findViewById(R.id.tvAddressReader);
+        toolbar = findViewById(R.id.toolbarInfoLibrarian);
+        tvNameLibrarian = findViewById(R.id.tvNameLibrarian);
+        tvIdLibrarian = findViewById(R.id.tvIdLibrarian);
+        tvBirthdayLibrarian = findViewById(R.id.tvBirthdayLibrarian);
+        tvGenderLibrarian = findViewById(R.id.tvGenderLibrarian);
+        tvEmailLibrarian = findViewById(R.id.tvEmailLibrarian);
+        tvAddressLibrarian = findViewById(R.id.tvAddressLibrarian);
         imgAvatar = findViewById(R.id.imgAvatar);
     }
 }

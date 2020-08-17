@@ -1,10 +1,13 @@
 package com.example.librarymanagement.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,7 +31,6 @@ public class SearchBookActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ListView listView;
     private SearchView searchBar;
-    private ImageView addBook;
 
     private Button btnNameBook, btnAuthor, btnCategory, btnIdBook;
 
@@ -48,15 +50,7 @@ public class SearchBookActivity extends AppCompatActivity {
         listBook =  (ArrayList<Book>)intent.getSerializableExtra(HomeActivity.BOOK);
         listBookLookUp = new ArrayList<Book>(listBook);
         setSupportActionBar(toolbar);
-        if (valueOf(intent.getSerializableExtra("BEFORE")).equals("SEARCH")) {
-            getSupportActionBar().setTitle("Tra cứu sách");
-            BEFORE = "SEARCH";
-            addBook.setVisibility(View.GONE);
-        }
-        else {
-            BEFORE = "MANAGEMENT";
-            getSupportActionBar().setTitle("Quản lý sách");
-        }
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,13 +64,6 @@ public class SearchBookActivity extends AppCompatActivity {
         turnOnButton(btnNameBook);
         updateListView();
 
-        addBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SearchBookActivity.this, AddBookActivity.class);
-                startActivity(intent);
-            }
-        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -152,6 +139,21 @@ public class SearchBookActivity extends AppCompatActivity {
                 searchByIdBook();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_add, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.add_data){
+            Intent intent = new Intent(SearchBookActivity.this, AddBookActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void searchNewText() {
@@ -281,6 +283,5 @@ public class SearchBookActivity extends AppCompatActivity {
         btnIdBook = findViewById(R.id.btnIdBook);
         btnNameBook = findViewById(R.id.btnNameBook);
         searchBar = findViewById(R.id.searchBar);
-        addBook = findViewById(R.id.addBook);
     }
 }

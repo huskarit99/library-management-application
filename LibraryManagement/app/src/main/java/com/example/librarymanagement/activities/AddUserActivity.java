@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.BitmapFactory;
 import android.database.Cursor;
@@ -35,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.librarymanagement.R;
 import com.example.librarymanagement.networks.CheckConnect;
 import com.example.librarymanagement.networks.Server;
+import com.example.librarymanagement.networks.SessionManager;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
@@ -51,6 +53,8 @@ public class AddUserActivity extends AppCompatActivity {
     private RadioButton radioButton;
     private RadioGroup radioGroup;
     private DatePickerDialog datePickerDialog;
+    private TextView tvId;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +62,33 @@ public class AddUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_user);
 
         mapping();
+        sessionManager = new SessionManager(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Thêm độc giả");
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        if(sessionManager.getRole()==3){
+            Intent intent = getIntent();
+            if(intent.getStringExtra("ROLE").equals("add_reader")) {
+                getSupportActionBar().setTitle("Thêm độc giả");
+                tvId.setText("Mã độc giả");
+                role = "1";
+            }else {
+                getSupportActionBar().setTitle("Thêm thủ thư");
+                tvId.setText("Mã thủ thư");
+                role = "2";
+            }
+
+        } else if(sessionManager.getRole()==2){
+            getSupportActionBar().setTitle("Thêm độc giả");
+            tvId.setText("Mã độc giả");
+            role = "1";
+        }
 
         edtImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +132,6 @@ public class AddUserActivity extends AppCompatActivity {
         if(CheckConnect.isconnected(AddUserActivity.this)){
             if(item.getItemId() == R.id.save_data){
                 user_id = edtIdUser.getText().toString();
-                role ="1";
                 name = edtName.getText().toString();
                 email = edtEmail.getText().toString();
                 birthday = edtBirthday.getText().toString();
@@ -217,5 +244,6 @@ public class AddUserActivity extends AppCompatActivity {
         edtAddress = findViewById(R.id.edtAddress);
         edtImage = findViewById(R.id.avatarUser);
         btnCalendar = findViewById(R.id.btnCalendar);
+        tvId = findViewById(R.id.tvId);
     }
 }

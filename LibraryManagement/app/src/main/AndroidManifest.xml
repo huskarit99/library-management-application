@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.BillActivity"></activity>
+        <activity android:name=".activities.InformationBillActivity"></activity>
+        <activity android:name=".activities.AddBillActivity" />
         <activity
             android:name=".activities.ChangeRuleActivity"
             android:screenOrientation="portrait" />

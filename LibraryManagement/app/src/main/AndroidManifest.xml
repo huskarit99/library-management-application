@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.librarymanagement">
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -15,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ChangeRuleActivity"
+        <activity android:name=".activities.BillActivity"></activity>
+        <activity
+            android:name=".activities.ChangeRuleActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.EditReaderActivity"
@@ -29,7 +32,8 @@
         <activity
             android:name=".activities.ReaderManagerActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.StatisticActivity"
+        <activity
+            android:name=".activities.StatisticActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.BorrowManagerActivity" />
         <activity android:name=".activities.BorrowedBookActivity" />
@@ -45,9 +49,11 @@
         <activity
             android:name=".activities.AddUserActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.EditLibrarianActivity"
+        <activity
+            android:name=".activities.EditLibrarianActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.InformationUserActivity"
+        <activity
+            android:name=".activities.InformationUserActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.InformationBookActivity" />
         <activity

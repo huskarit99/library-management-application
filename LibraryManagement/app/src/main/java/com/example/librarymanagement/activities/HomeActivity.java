@@ -41,8 +41,8 @@ import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
     Toolbar toolbarHome;
-    LinearLayout linearLogout, linearInfo, linearReaderManager, linearLibrarianManager, linearRule, linearSearchBook, linearBookManager,
-    linearBill;
+    LinearLayout linearLogout, linearInfo, linearReaderManager, linearLibrarianManager, linearRule,
+            linearSearchBook, linearBookManager, linearBill, linearBorrowedBook;
 
     SessionManager sessionManager;
     CardView cardViewLibrarian, cardViewAdmin;
@@ -167,7 +167,15 @@ public class HomeActivity extends AppCompatActivity {
         linearBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(HomeActivity.this, BorrowManagerActivity.class);
+                startActivity(intent);
+            }
+        });
+        linearBorrowedBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, BorrowedBookActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -416,6 +424,7 @@ public class HomeActivity extends AppCompatActivity {
         linearSearchBook = findViewById(R.id.lnSearchBook);
         linearBookManager = findViewById(R.id.lnBookManager);
         linearBill = findViewById(R.id.lnBill);
+        linearBorrowedBook = findViewById(R.id.lnBorrowedBook);
         cardViewLibrarian = findViewById(R.id.cardViewLibrarian);
         cardViewAdmin = findViewById(R.id.cardViewAdmin);
     }

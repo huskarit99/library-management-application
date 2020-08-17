@@ -47,6 +47,12 @@ public class SearchBookActivity extends AppCompatActivity {
         mapping();
 
         Intent intent = getIntent();
+        BEFORE = valueOf(intent.getSerializableExtra("BEFORE"));
+        if (BEFORE == "MANAGEMENT"){
+            setTitle("Quản lí sách");
+        }else{
+            setTitle("Tra cứu sách");
+        }
         listBook =  (ArrayList<Book>)intent.getSerializableExtra(HomeActivity.BOOK);
         listBookLookUp = new ArrayList<Book>(listBook);
         setSupportActionBar(toolbar);
@@ -59,11 +65,8 @@ public class SearchBookActivity extends AppCompatActivity {
             }
         });
 
-
-
         turnOnButton(btnNameBook);
         updateListView();
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -143,7 +146,8 @@ public class SearchBookActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add, menu);
+        if (BEFORE.equals("MANAGEMENT"))
+            getMenuInflater().inflate(R.menu.menu_add, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

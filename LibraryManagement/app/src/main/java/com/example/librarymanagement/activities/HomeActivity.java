@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.librarymanagement.R;
 import com.example.librarymanagement.models.Author;
 import com.example.librarymanagement.models.BookOfAuthors;
+import com.example.librarymanagement.models.BorrowedBook;
 import com.example.librarymanagement.models.Category;
 import com.example.librarymanagement.models.Publisher;
 import com.example.librarymanagement.models.User;
@@ -39,10 +40,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.lang.String.valueOf;
+
 public class HomeActivity extends AppCompatActivity {
     Toolbar toolbarHome;
     LinearLayout linearLogout, linearInfo, linearReaderManager, linearLibrarianManager, linearRule, linearSearchBook, linearBookManager,
-    linearBill;
+    linearBill, linearBorrowedBook;
 
     SessionManager sessionManager;
     CardView cardViewLibrarian, cardViewAdmin;
@@ -53,10 +56,12 @@ public class HomeActivity extends AppCompatActivity {
     int user_id;
 
     ArrayList<User> listUser;
+    ArrayList<Book> listBook;
     ArrayList<Author> listAuthor;
     ArrayList<Category> listCategory;
     ArrayList<Publisher> listPublisher;
     ArrayList<BookOfAuthors> listBookOfAuthors;
+    ArrayList<BorrowedBook> listBorrowedBook;
 
     Map<Integer, String> mappingCategory;
     Map<Integer, String> mappingPublisher;
@@ -65,7 +70,6 @@ public class HomeActivity extends AppCompatActivity {
     public static final String USER = "USER";
     public static final String BOOK = "BOOK";
 
-    ArrayList<Book> listBook;
     RequestQueue requestQueue;
 
     @Override
@@ -91,8 +95,9 @@ public class HomeActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(HomeActivity.this);
         getInfoUser();
         getAllBook();
+        getListBorrowedBook();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         }catch(InterruptedException e){
             e.printStackTrace();
         }
@@ -168,6 +173,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+        linearBorrowedBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, BorrowedBookActivity.class);
+                intent.putExtra("BORROWEDBOOK", listBorrowedBook);
+                startActivity(intent);
             }
         });
     }
@@ -378,6 +391,45 @@ public class HomeActivity extends AppCompatActivity {
         requestQueue.add(arrayReq);
     }
 
+    private void getListBorrowedBook() {
+        listBorrowedBook = new ArrayList<BorrowedBook>();
+        String url = Server.GETBORROWEDBOOK + "?id=" + valueOf(user_id);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                listBorrowedBook.add(new BorrowedBook(
+                                        jsonObject.getInt("bill_id"),
+                                        jsonObject.getInt("user_id"),
+                                        jsonObject.getInt("book_id"),
+                                        jsonObject.getString("dateOfBorrowed"),
+                                        jsonObject.getString("dateOfPurchase"),
+                                        jsonObject.getInt("state")
+                                ));
+                                for (int j = 0; j < listBook.size(); j++){
+                                    if (listBook.get(j).getBook_id() == listBorrowedBook.get(i).getBook_id()){
+                                        listBorrowedBook.get(i).setName(listBook.get(j).getName());
+                                        listBorrowedBook.get(i).setImage(listBook.get(j).getImage());
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(HomeActivity.this,"Không lấy được dữ kiệu người dùng",Toast.LENGTH_SHORT).show();
+                    }
+                });
+        requestQueue.add(jsonArrayRequest);
+    }
+
     @Override
     protected void onResume() {
         count = false;
@@ -416,6 +468,7 @@ public class HomeActivity extends AppCompatActivity {
         linearSearchBook = findViewById(R.id.lnSearchBook);
         linearBookManager = findViewById(R.id.lnBookManager);
         linearBill = findViewById(R.id.lnBill);
+        linearBorrowedBook =findViewById(R.id.lnBorrowedBook);
         cardViewLibrarian = findViewById(R.id.cardViewLibrarian);
         cardViewAdmin = findViewById(R.id.cardViewAdmin);
     }

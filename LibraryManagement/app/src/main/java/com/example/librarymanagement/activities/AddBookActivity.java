@@ -31,7 +31,9 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.librarymanagement.R;
+import com.example.librarymanagement.models.Book;
 import com.example.librarymanagement.networks.Server;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +44,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.lang.String.valueOf;
 
 public class AddBookActivity extends AppCompatActivity {
 
@@ -59,6 +63,7 @@ public class AddBookActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         init();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
@@ -118,8 +123,16 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(AddBookActivity.this, SearchBookActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_save, menu);
+        getMenuInflater().inflate(R.menu.menu_add_save, menu);
         return true;
     }
 
@@ -349,11 +362,12 @@ public class AddBookActivity extends AppCompatActivity {
             mapCategories.put(categories_name[i], categories_id[i]);
         Arrays.sort(categories_name);
         category = mapCategories.get(categories_name[0]).toString();
+        String tmp = "";
         builder.setSingleChoiceItems(categories_name, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int position) {
-                category = mapCategories.get(categories_name[position]).toString();
                 edtCategory.setText(categories_name[position]);
+                category = valueOf(mapCategories.get(edtCategory.getText()));
             }
         });
         builder.setCancelable(false);
@@ -366,6 +380,8 @@ public class AddBookActivity extends AppCompatActivity {
         builder.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                edtCategory.setText("");
+                category="";
                 dialogInterface.dismiss();
             }
         });
@@ -413,7 +429,7 @@ public class AddBookActivity extends AppCompatActivity {
         builder.setSingleChoiceItems(publishers_name, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int position) {
-                publisher = mapPublishers.get(publishers_name[position]).toString();
+                publisher = valueOf(mapPublishers.get(publishers_name[position]));
                 edtPublisher.setText(publishers_name[position]);
             }
         });
@@ -427,6 +443,8 @@ public class AddBookActivity extends AppCompatActivity {
         builder.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                publisher="";
+                edtPublisher.setText("");
                 dialogInterface.dismiss();
             }
         });

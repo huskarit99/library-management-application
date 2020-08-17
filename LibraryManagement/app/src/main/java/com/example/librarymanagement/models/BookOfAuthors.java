@@ -1,6 +1,8 @@
 package com.example.librarymanagement.models;
 
-public class BookOfAuthors {
+import java.io.Serializable;
+
+public class BookOfAuthors implements Serializable {
     private int author_id;
     private int book_id;
 

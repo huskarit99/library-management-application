@@ -20,4 +20,5 @@ public class Server {
     public static String GETRULE = PROTOCOL + HOSTNAME + "/getrule.php";
     public static String EDITRULE = PROTOCOL + HOSTNAME + "/updaterule.php";
     public static String CHANGEPASSWORD = PROTOCOL + HOSTNAME + "/changepassword.php";
+    public static String GETBORROWEDBOOK = PROTOCOL + HOSTNAME + "/getborrowedbook.php";
 }

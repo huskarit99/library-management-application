@@ -1,5 +1,7 @@
 package com.example.librarymanagement.models;
 
+import java.io.Serializable;
+
 public class Author {
     private int author_id;
     private String name;

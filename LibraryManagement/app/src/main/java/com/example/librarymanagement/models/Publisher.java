@@ -1,6 +1,8 @@
 package com.example.librarymanagement.models;
 
-public class Publisher {
+import java.io.Serializable;
+
+public class Publisher implements Serializable {
     private int publisher_id;
     private String name;
 

@@ -5,21 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".activities.EditBookActivity">
+    tools:context=".activities.AddBookActivity">
+
     <FrameLayout
-        android:id="@+id/frame_edit_book"
+        android:id="@+id/frame_add_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include
-            android:id="@+id/toolbarInfoBook"
+            android:id="@+id/toolbarAddBook"
             layout="@layout/toolbar" />
     </FrameLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frame_edit_book"
+        android:layout_below="@+id/frame_add_book"
         android:scrollbarThumbVertical="@null">
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,14 +44,14 @@
 
                     <LinearLayout
                         android:layout_width="87.1dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/avatarBook"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/image_book" />
+                            android:layout_height="108dp"
+                            android:src="@drawable/ic_image_book" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -59,11 +62,12 @@
 
                         <EditText
                             android:id="@+id/edtBookName"
+                            android:singleLine="true"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/book_name"
+                            android:hint="Tên sách"
+                            android:textStyle="bold"
                             android:textSize="14sp">
-
                         </EditText>
 
                         <LinearLayout
@@ -71,62 +75,63 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:orientation="horizontal">
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/id_book"
                                 android:textColor="#000" />
-
                             <TextView
-                                android:id="@+id/idBook"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:id="@+id/edtBookId"
+                                android:singleLine="true"
                                 android:layout_marginStart="10dp"
-                                android:text="@string/id_book"
-                                android:textColor="#000" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:text="@string/quantum"
-                                android:textColor="#000" />
-
-                            <TextView
-                                android:id="@+id/quantum"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
-                                android:text="@string/quantum"
-                                android:textColor="#000" />
+                                android:textSize="14sp">
+                            </TextView>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             android:orientation="horizontal">
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
+                                android:text="@string/quantum"
+                                android:textColor="#000" />
+                            <TextView
+                                android:id="@+id/edtQuantum"
+                                android:singleLine="true"
+                                android:layout_marginStart="7dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:text="@string/type_book"
                                 android:textColor="#000" />
-
-
+                            <EditText
+                                android:id="@+id/edtCategory"
+                                android:drawableRight="@drawable/ic_unfold"
+                                android:singleLine="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="13dp"
+                                android:hint="Thể loại"
+                                android:textSize="14sp"/>
                         </LinearLayout>
-
-
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -146,6 +151,15 @@
                             android:layout_marginBottom="21dp"
                             android:text="@string/author"
                             android:textColor="#000" />
+                        <EditText
+                            android:drawableRight="@drawable/ic_unfold"
+                            android:singleLine="true"
+                            android:id="@+id/edtAuthor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="59dp"
+                            android:hint="Tác giả"
+                            android:textSize="14sp"/>
 
                     </LinearLayout>
 
@@ -163,13 +177,15 @@
 
                         <EditText
                             android:id="@+id/edtPublisher"
+                            android:drawableRight="@drawable/ic_unfold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="22dp"
-                            android:layout_marginBottom="21dp"
                             android:hint="@string/publisher"
+                            android:singleLine="true"
                             android:textSize="14sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -184,9 +200,10 @@
 
                         <EditText
                             android:id="@+id/edtPublishingYear"
+                            android:singleLine="true"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="22dp"
+                            android:layout_marginStart="18dp"
                             android:hint="@string/publishing_year"
                             android:textSize="14sp" />
                     </LinearLayout>

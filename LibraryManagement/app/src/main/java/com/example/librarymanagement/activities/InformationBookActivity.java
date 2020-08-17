@@ -72,7 +72,9 @@ public class InformationBookActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.edit_data){
-
+            Intent intent = new Intent(InformationBookActivity.this,  EditBookActivity.class);
+            intent.putExtra("INFOBOOK", book);
+            startActivity((intent));
         }
         return super.onOptionsItemSelected(item);
     }

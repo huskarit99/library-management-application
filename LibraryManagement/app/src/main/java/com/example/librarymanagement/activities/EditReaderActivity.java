@@ -107,7 +107,7 @@ public class EditReaderActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.refesh_data:
+            case R.id.refresh_data:
                 edtNameReader.setText(user.getName());
                 edtBirthDayReader.setText(user.getBirthday());
                 edtEmailReader.setText(user.getEmail());

@@ -15,15 +15,6 @@
         <include
             android:id="@+id/toolbarInfoBook"
             layout="@layout/toolbar" />
-
-        <ImageView
-            android:id="@+id/addBook"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_unfold" />
     </FrameLayout>
 
     <androidx.cardview.widget.CardView
@@ -205,6 +196,7 @@
     </androidx.cardview.widget.CardView>
 
     <ImageButton
+        android:id="@+id/btnDeleteImage"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentEnd="true"

@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/avatarBook"
             android:layout_margin="15dp"
             android:layout_width="80dp"
             android:layout_height="115dp"
@@ -40,7 +41,7 @@
                     android:textColor="#000000" />
                 <TextView
                     android:id="@+id/idBook"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="34dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/id_book"
@@ -58,7 +59,7 @@
                     android:textColor="#000000" />
                 <TextView
                     android:id="@+id/idBill"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/id_bill"
@@ -86,7 +87,8 @@
                 android:layout_marginTop="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -94,7 +96,7 @@
                     android:textColor="#000000" />
                 <TextView
                     android:id="@+id/payDate"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="35dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pay_date"

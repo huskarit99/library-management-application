@@ -61,7 +61,7 @@ public class LibrarianManagerActivity extends AppCompatActivity {
         userArrayList = new ArrayList<>();
         userAdapter = new UserAdapter(this, R.layout.row_user, userArrayList);
         if (CheckConnect.isconnected(LibrarianManagerActivity.this)) {
-            url = Server.getListUser + "?role_id=" + 2;
+            url = Server.GETALLUSERS + "?role_id=" + 2;
             getListUser(url);
             listLibrarian.setAdapter(userAdapter);
         } else {

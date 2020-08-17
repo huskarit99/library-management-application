@@ -65,7 +65,7 @@ public class ReaderManagerActivity extends AppCompatActivity {
         userArrayList = new ArrayList<>();
         userAdapter = new UserAdapter(this, R.layout.row_user, userArrayList);
         if (CheckConnect.isconnected(ReaderManagerActivity.this)) {
-            url = Server.getListUser + "?role_id=" + 1;
+            url = Server.GETALLUSERS+ "?role_id=" + 1;
             getListUser(url);
             listReader.setAdapter(userAdapter);
         } else {

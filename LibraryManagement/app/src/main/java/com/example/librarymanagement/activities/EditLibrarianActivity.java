@@ -140,7 +140,7 @@ public class EditLibrarianActivity extends AppCompatActivity {
                                     pd.setMessage("Đang lưu...");
                                     pd.show();
                                     final RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.editUser,
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.EDITUSER,
                                             new Response.Listener<String>() {
                                                 @Override
                                                 public void onResponse(String response) {

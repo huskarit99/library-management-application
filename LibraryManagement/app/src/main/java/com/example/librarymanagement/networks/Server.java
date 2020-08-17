@@ -1,25 +1,25 @@
 package com.example.librarymanagement.networks;
 
 public class Server {
-    public static String localhost = "library-management-application.000webhostapp.com";
+    public static String HOSTNAME = "library-management-application.000webhostapp.com";
+    public static String PROTOCOL = "https://";
 
-    public static String addUser = "http://" + localhost + "/adduser.php";
 
-    public static String getUser = "http://" + localhost + "/getuser.php";
+    public static String GETUSER = PROTOCOL + HOSTNAME + "/getuser.php";
 
-    public static String getListUser = "http://" + localhost + "/getlistuser.php";
+    public static String GETALLUSERS = PROTOCOL + HOSTNAME + "/getlistuser.php";
 
-    public static String editUser = "http://" + localhost + "/updateuser.php";
+    public static String EDITUSER = PROTOCOL + HOSTNAME + "/updateuser.php";
 
-    public static String getListCategory = "http://" + localhost + "/getallcategories.php";
+    public static String GETALLCATEGORIES = PROTOCOL + HOSTNAME + "/getallcategories.php";
 
-    public static String addCategory = "http://" + localhost + "/addcategory.php";
+    public static String ADDCATEGORY = PROTOCOL + HOSTNAME + "/addcategory.php";
 
-    public static String editCategory = "http://" + localhost + "/updatecategory.php";
+    public static String EDITCATEGORY = PROTOCOL + HOSTNAME + "/updatecategory.php";
 
-    public static String getRule = "http://" + localhost + "/getrule.php";
+    public static String GETRULE = PROTOCOL + HOSTNAME + "/getrule.php";
 
-    public static String editRule = "http://" + localhost + "/updaterule.php";
+    public static String EDITRULE = PROTOCOL + HOSTNAME + "/updaterule.php";
 
-    public static String changePassword = "http://" + localhost + "/changepassword.php";
+    public static String CHANGEPASSWORD = PROTOCOL + HOSTNAME + "/changepassword.php";
 }

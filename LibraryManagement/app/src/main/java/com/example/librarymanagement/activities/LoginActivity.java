@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void checkPassword(final String userId, final String password) {
         RequestQueue queue = Volley.newRequestQueue(getApplication());
-        StringRequest postRequest = new StringRequest(Request.Method.POST, Server.getUser,
+        StringRequest postRequest = new StringRequest(Request.Method.POST, Server.GETUSER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
         pd.setMessage("Đang lưu...");
         pd.show();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.changePassword,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.CHANGEPASSWORD,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -196,7 +196,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void doLogin(final String userId, final String password) {
         RequestQueue queue = Volley.newRequestQueue(getApplication());
-        StringRequest postRequest = new StringRequest(Request.Method.POST, Server.getUser,
+        StringRequest postRequest = new StringRequest(Request.Method.POST, Server.GETUSER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

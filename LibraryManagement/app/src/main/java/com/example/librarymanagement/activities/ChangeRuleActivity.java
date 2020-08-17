@@ -108,7 +108,7 @@ public class ChangeRuleActivity extends AppCompatActivity {
                     pd.setMessage("Đang lưu...");
                     pd.show();
                     RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.editRule,
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.EDITRULE,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -147,7 +147,7 @@ public class ChangeRuleActivity extends AppCompatActivity {
     }
 
     private void getRule(){
-        url = Server.getRule+"?id=1";
+        url = Server.GETRULE+"?id=1";
         final RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -207,14 +207,14 @@ public class ChangeRuleActivity extends AppCompatActivity {
                         pd.setMessage("Đang lưu...");
                         pd.show();
                         RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.editCategory,
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.EDITCATEGORY,
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
                                         if (response.equals("Success")) {
                                             Toast.makeText(ChangeRuleActivity.this, "Chỉnh sửa thể loại thành công", Toast.LENGTH_SHORT).show();
                                             for(int i = 0; i< categoryArrayList.size(); i++){
-                                                if(categoryArrayList.get(i).getCategoryId()==c.getCategoryId()){
+                                                if(categoryArrayList.get(i).getCategory_id()==c.getCategory_id()){
                                                     categoryArrayList.get(i).setName(name);
                                                     categoryAdapter.notifyDataSetChanged();
                                                 }
@@ -234,7 +234,7 @@ public class ChangeRuleActivity extends AppCompatActivity {
                             @Override
                             protected Map<String, String> getParams() throws AuthFailureError {
                                 Map<String, String> params = new HashMap<String, String>();
-                                params.put("category_id",String.valueOf(c.getCategoryId()));
+                                params.put("category_id",String.valueOf(c.getCategory_id()));
                                 params.put("name", name);
                                 return params;
                             }
@@ -282,7 +282,7 @@ public class ChangeRuleActivity extends AppCompatActivity {
                         pd.setMessage("Đang lưu...");
                         pd.show();
                         RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.addCategory,
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDCATEGORY,
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
@@ -330,7 +330,7 @@ public class ChangeRuleActivity extends AppCompatActivity {
 
     private void getCategories(){
         RequestQueue requestQueue = Volley.newRequestQueue(ChangeRuleActivity.this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Server.getListCategory, null,
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Server.GETALLCATEGORIES, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {

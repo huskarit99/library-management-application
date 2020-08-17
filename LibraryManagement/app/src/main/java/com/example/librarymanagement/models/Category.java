@@ -3,23 +3,23 @@ package com.example.librarymanagement.models;
 import java.io.Serializable;
 
 public class Category implements Serializable {
-    int categoryId;
-    String name;
+    private int category_id;
+    private String name;
 
     public Category() {
     }
 
-    public Category(int categoryId, String name) {
-        this.categoryId = categoryId;
+    public Category(int category_id, String name) {
+        this.category_id = category_id;
         this.name = name;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public int getCategory_id() {
+        return category_id;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
     }
 
     public String getName() {

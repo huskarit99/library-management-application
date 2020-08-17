@@ -179,6 +179,7 @@ public class AddBookActivity extends AppCompatActivity {
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
+                System.out.println(picturePath);
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
                 Log.w("path of image from gallery......******************.........", picturePath + "");
                 edtImage.setImageBitmap(thumbnail);
@@ -197,37 +198,37 @@ public class AddBookActivity extends AppCompatActivity {
                 Toast.makeText(AddBookActivity.this, "Bạn đã cung cấp thiếu thông tin !!!", Toast.LENGTH_SHORT).show();
             }
             else{
-                    RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDBOOK,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    Toast.makeText(AddBookActivity.this, "Cập nhật dữ liệu thành công", Toast.LENGTH_SHORT).show();
+                RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDBOOK,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Toast.makeText(AddBookActivity.this, "Cập nhật dữ liệu thành công", Toast.LENGTH_SHORT).show();
 //                                finish();
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(AddBookActivity.this, "Cập nhật dữ liệu thất bại", Toast.LENGTH_SHORT).show();
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("bookname", book_name);
-                            params.put("publicationyear", publishing_year);
-                            params.put("image", image);
-                            params.put("publisher", publisher);
-                            params.put("category", category);
-                            params.put("authors", selectedAuthors.toString());
-                            params.put("amount", amount);
-                            return params;
-                        }
-                    };
-                    requestQueue.add(stringRequest);
-                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(AddBookActivity.this, "Cập nhật dữ liệu thất bại", Toast.LENGTH_SHORT).show();
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("bookname", book_name);
+                        params.put("publicationyear", publishing_year);
+                        params.put("image", image);
+                        params.put("publisher", publisher);
+                        params.put("category", category);
+                        params.put("authors", selectedAuthors.toString());
+                        params.put("amount", amount);
+                        return params;
+                    }
+                };
+                requestQueue.add(stringRequest);
             }
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -239,7 +240,7 @@ public class AddBookActivity extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         authors_name = new String[response.length()];
                         authors_id = new Integer[response.length()];
-                         for (int i = 0; i < response.length(); i++){
+                        for (int i = 0; i < response.length(); i++){
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
                                 authors_name[i] = jsonObject.getString("name");
@@ -362,12 +363,11 @@ public class AddBookActivity extends AppCompatActivity {
             mapCategories.put(categories_name[i], categories_id[i]);
         Arrays.sort(categories_name);
         category = mapCategories.get(categories_name[0]).toString();
-        String tmp = "";
         builder.setSingleChoiceItems(categories_name, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int position) {
                 edtCategory.setText(categories_name[position]);
-                category = valueOf(mapCategories.get(edtCategory.getText()));
+                category = valueOf(mapCategories.get(categories_name[position]));
             }
         });
         builder.setCancelable(false);

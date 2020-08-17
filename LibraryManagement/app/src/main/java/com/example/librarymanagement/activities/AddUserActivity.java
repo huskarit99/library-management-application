@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -48,7 +49,7 @@ public class AddUserActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private EditText edtName, edtIdUser, edtEmail, edtBirthday, edtAddress;
     private ImageView edtImage, btnCalendar;
-    private String user_id, name, role, gender, email, birthday, address, password;
+    private String user_id, name, role, gender, email, birthday, address, password, state;
     private String image;
     private RadioButton radioButton;
     private RadioGroup radioGroup;
@@ -78,16 +79,19 @@ public class AddUserActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle("Thêm độc giả");
                 tvId.setText("Mã độc giả");
                 role = "1";
+                state = "1";
             }else {
                 getSupportActionBar().setTitle("Thêm thủ thư");
                 tvId.setText("Mã thủ thư");
                 role = "2";
+                state = "1";
             }
 
         } else if(sessionManager.getRole()==2){
             getSupportActionBar().setTitle("Thêm độc giả");
             tvId.setText("Mã độc giả");
             role = "1";
+            state = "1";
         }
 
         edtImage.setOnClickListener(new View.OnClickListener() {
@@ -137,38 +141,62 @@ public class AddUserActivity extends AppCompatActivity {
                 birthday = edtBirthday.getText().toString();
                 address = edtAddress.getText().toString();
                 password = "123456";
-                RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDUSER,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Toast.makeText(AddUserActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(AddUserActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                    {
-                        @Override
-                        protected Map<String, String> getParams() {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("userid", user_id);
-                            params.put("role", role);
-                            params.put("name", name);
-                            params.put("gender", gender);
-                            params.put("email", email);
-                            params.put("birthday", birthday);
-                            params.put("address", address);
-                            params.put("password", password);
-                            params.put("image", image);
-                            return params;
-                        }
-                };
-                requestQueue.add(stringRequest);
+                if(user_id.isEmpty() || name.isEmpty() || birthday.isEmpty() || address.isEmpty() || email.isEmpty() || image.isEmpty()){
+                    Toast.makeText(AddUserActivity.this, "Bạn chưa nhập dữ liệu", Toast.LENGTH_SHORT).show();
+                }else{
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddUserActivity.this);
+                    builder.setMessage("Bạn có muốn chỉnh sửa độc giả này?")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    final ProgressDialog pd = new ProgressDialog(AddUserActivity.this);
+                                    pd.setMessage("Đang lưu...");
+                                    pd.show();
+                                    RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDUSER,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    if(response.equals("Success")){
+                                                        Toast.makeText(AddUserActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                                                        finish();
+                                                    }else{
+                                                        Toast.makeText(AddUserActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    pd.dismiss();
+
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    Toast.makeText(AddUserActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                                                    pd.dismiss();
+                                                }
+                                            })
+                                    {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> params = new HashMap<String, String>();
+                                            params.put("userid", user_id);
+                                            params.put("role", role);
+                                            params.put("name", name);
+                                            params.put("gender", gender);
+                                            params.put("email", email);
+                                            params.put("birthday", birthday);
+                                            params.put("address", address);
+                                            params.put("password", password);
+                                            params.put("image", image);
+                                            params.put("state", state);
+                                            return params;
+                                        }
+                                    };
+                                    requestQueue.add(stringRequest);
+                                }
+                            })
+                            .setNegativeButton("Cancel", null);
+                    builder.create().show();
+                }
             }
         }else{
             Toast.makeText(AddUserActivity.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();

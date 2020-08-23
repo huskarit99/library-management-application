@@ -1,8 +1,8 @@
 package com.example.librarymanagement.networks;
 
 public class Server {
-    public static String HOSTNAME = "library-management-application.000webhostapp.com";
     public static String PROTOCOL = "https://";
+    public static String HOSTNAME = "huskarit99.000webhostapp.com";
 
     public static String ADDUSER = PROTOCOL + HOSTNAME + "/adduser.php";
     public static String ADDBOOK = PROTOCOL + HOSTNAME + "/addbook.php";

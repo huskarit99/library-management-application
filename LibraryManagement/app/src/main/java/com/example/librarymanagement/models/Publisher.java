@@ -6,6 +6,13 @@ public class Publisher implements Serializable {
     private int publisher_id;
     private String name;
 
+    public Boolean areVariablesNull(){
+        if (publisher_id == 0 || name == null){
+            return false;
+        }
+        return true;
+    }
+
     public Publisher(int publisher_id, String name){
         this.name = name;
         this.publisher_id = publisher_id;

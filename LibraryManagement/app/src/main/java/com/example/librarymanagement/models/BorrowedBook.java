@@ -13,6 +13,13 @@ public class BorrowedBook implements Serializable {
     private String name;
     private String image;
 
+    public Boolean areVariablesNull() {
+        if (bill_id == 0 || user_id == 0 || book_id == 0 || dateOfBorrowed == null
+                || dateOfPurchase == null || name == null || image == null)
+            return false;
+        return true;
+    }
+
     public BorrowedBook(int bill_id, int user_id, int book_id, String dateOfBorrowed, String dateOfPurchase, int state){
         this.bill_id = bill_id;
         this.user_id = user_id;

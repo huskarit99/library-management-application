@@ -12,13 +12,17 @@ import android.widget.Toast;
 
 import com.example.librarymanagement.R;
 import com.example.librarymanagement.models.User;
+import com.example.librarymanagement.networks.SessionManager;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class InformationUserActivity extends AppCompatActivity {
     Toolbar toolbar;
     TextView tvNameUser, tvIdUser, tvBirthday, tvGender, tvEmail, tvAddress;
     ImageView imgAvatar;
     User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +38,9 @@ public class InformationUserActivity extends AppCompatActivity {
                 finish();
             }
         });
-        Intent intent = getIntent();
-        user = (User) intent.getSerializableExtra(HomeActivity.USER);
+
+        getInfoUserByID();
+
         if(user!=null){
             tvNameUser.setText(user.getName());
             tvIdUser.setText(String.valueOf(user.getUser_id()));
@@ -48,6 +53,17 @@ public class InformationUserActivity extends AppCompatActivity {
         }else{
             Toast.makeText(InformationUserActivity.this, "Load dữ liệu không thành công", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getInfoUserByID(){
+        SessionManager sessionManager = new SessionManager(this);
+        ArrayList<User> listInfoUser = sessionManager.getInfoUser();
+        int user_id = sessionManager.getUserId();
+        for (int i = 0; i < listInfoUser.size(); i++)
+            if (listInfoUser.get(i).getUser_id() == user_id){
+                user = listInfoUser.get(i);
+                break;
+            }
     }
 
     private void mapping() {

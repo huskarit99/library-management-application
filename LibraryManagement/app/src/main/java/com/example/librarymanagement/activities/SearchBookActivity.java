@@ -53,7 +53,7 @@ public class SearchBookActivity extends AppCompatActivity {
         }else{
             setTitle("Tra cứu sách");
         }
-        listBook =  (ArrayList<Book>)intent.getSerializableExtra(HomeActivity.BOOK);
+        listBook =  (ArrayList<Book>)intent.getSerializableExtra("hihi'");
         listBookLookUp = new ArrayList<Book>(listBook);
         setSupportActionBar(toolbar);
 

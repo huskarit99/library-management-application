@@ -50,27 +50,8 @@ public class HomeActivity extends AppCompatActivity {
     SessionManager sessionManager;
     CardView cardViewLibrarian, cardViewAdmin;
     ImageButton searchBook, bookManager;
-    User user;
-    String url;
+
     static boolean count;
-    int user_id;
-
-    ArrayList<User> listUser;
-    ArrayList<Book> listBook;
-    ArrayList<Author> listAuthor;
-    ArrayList<Category> listCategory;
-    ArrayList<Publisher> listPublisher;
-    ArrayList<BookOfAuthors> listBookOfAuthors;
-    ArrayList<BorrowedBook> listBorrowedBook;
-
-    Map<Integer, String> mappingCategory;
-    Map<Integer, String> mappingPublisher;
-    Map<Integer, String> mappingAuthor;
-
-    public static final String USER = "USER";
-    public static final String BOOK = "BOOK";
-
-    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,15 +73,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-        requestQueue = Volley.newRequestQueue(HomeActivity.this);
-        getInfoUser();
-        getAllBook();
-        getListBorrowedBook();
-        try {
-            Thread.sleep(2000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
         linearLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
                                 sessionManager.clear();
                                 startActivity(intent);
                                 onDestroy();
@@ -117,17 +89,17 @@ public class HomeActivity extends AppCompatActivity {
                         })
                         .setNegativeButton("Cancel", null);
                 builder.create().show();
-
             }
         });
+
         linearInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this,InformationUserActivity.class);
-                intent.putExtra(USER,user);
+                Intent intent = new Intent(HomeActivity.this, InformationUserActivity.class);
                 startActivity(intent);
             }
         });
+
         linearReaderManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,6 +114,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         linearRule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,11 +123,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        linearSearchBook.setOnClickListener(new View.OnClickListener(){
+        linearSearchBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, SearchBookActivity.class);
-                intent.putExtra(BOOK, listBook);
                 intent.putExtra("BEFORE", "SEARCH");
                 startActivity(intent);
             }
@@ -164,11 +136,11 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, SearchBookActivity.class);
-                intent.putExtra(BOOK, listBook);
                 intent.putExtra("BEFORE", "MANAGEMENT");
                 startActivity(intent);
             }
         });
+
         linearBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,253 +148,14 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         linearBorrowedBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, BorrowedBookActivity.class);
-                intent.putExtra("BORROWEDBOOK", listBorrowedBook);
                 startActivity(intent);
             }
         });
-    }
-
-    private void getAllBook(){
-        listBook = new ArrayList<>();
-        getInfoCategory();
-        getInfoAuthor();
-        getInfoPublisher();
-        getInfoBookOfAuthors();
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Server.GETALLBOOKS, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                listBook.add(new Book(
-                                        jsonObject.getInt("book_id"),
-                                        jsonObject.getInt("category_id"),
-                                        jsonObject.getInt("publisher_id"),
-                                        jsonObject.getString("name"),
-                                        jsonObject.getInt("publicationYear"),
-                                        jsonObject.getString("image"),
-                                        jsonObject.getInt("amount")
-                                ));
-                                int category_id = listBook.get(i).getCategory_id();
-                                listBook.get(i).setCategory(mappingCategory.get(category_id));
-                                int publisher_id = listBook.get(i).getPublisher_id();
-                                listBook.get(i).setPublisher(mappingPublisher.get(publisher_id));
-
-                                String bookOfAuthors = "";
-                                for (int j = 0; j < listBookOfAuthors.size(); j++){
-                                    if (listBookOfAuthors.get(j).getBook_id() == listBook.get(i).getBook_id()){
-                                        if (bookOfAuthors != "")
-                                            bookOfAuthors += " ,";
-                                        bookOfAuthors += mappingAuthor.get(listBookOfAuthors.get(j).getAuthor_id());
-                                    }
-                                }
-                                listBook.get(i).setAuthors(bookOfAuthors);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(HomeActivity.this,"Không lấy được dữ kiệu người dùng",Toast.LENGTH_SHORT).show();
-                    }
-                });
-        requestQueue.add(jsonArrayRequest);
-    }
-
-    private void getInfoUser() {
-        sessionManager = new SessionManager(this);
-        user_id=sessionManager.getUser();
-        url= Server.GETINFOUSER+"?user_id="+user_id;
-        listUser = new ArrayList<>();
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                listUser.add(new User(
-                                        jsonObject.getInt("user_id"),
-                                        jsonObject.getInt("role_id"),
-                                        jsonObject.getString("name"),
-                                        jsonObject.getString("gender"),
-                                        jsonObject.getString("email"),
-                                        jsonObject.getString("birthday"),
-                                        jsonObject.getString("address"),
-                                        jsonObject.getString("image")
-                                ));
-                                user = listUser.get(0);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(HomeActivity.this,"Không lấy được dữ liệu người dùng",Toast.LENGTH_SHORT).show();
-            }
-        });
-        requestQueue.add(jsonArrayRequest);
-    }
-
-    private void getInfoBookOfAuthors() {
-        listBookOfAuthors = new ArrayList<>();
-        JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLBOOKOFAUTHORS, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++){
-                            try {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                listBookOfAuthors.add(new BookOfAuthors(
-                                        Integer.parseInt(jsonObject.getString("book_id")),
-                                        Integer.parseInt(jsonObject.getString("author_id"))
-                                ));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(HomeActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
-                    }
-                });
-        requestQueue.add(arrayReq);
-    }
-
-    private void getInfoPublisher() {
-        listPublisher = new ArrayList<>();
-        mappingPublisher = new HashMap<Integer, String>();
-        JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLPUBLISHERS, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++){
-                            try {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                listPublisher.add(new Publisher(
-                                        Integer.parseInt(jsonObject.getString("publisher_id")),
-                                        jsonObject.getString("name")
-                                ));
-                                mappingPublisher.put(listPublisher.get(i).getPublisher_id(), listPublisher.get(i).getName());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(HomeActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
-                    }
-                });
-        requestQueue.add(arrayReq);
-    }
-
-    private void getInfoCategory(){
-        listCategory = new ArrayList<>();
-        mappingCategory = new HashMap<Integer, String>();
-        JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLCATEGORIES, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++){
-                            try {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                listCategory.add(new Category(
-                                        Integer.parseInt(jsonObject.getString("category_id")),
-                                        jsonObject.getString("name")
-                                ));
-                                mappingCategory.put(listCategory.get(i).getCategory_id(), listCategory.get(i).getName());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(HomeActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
-                    }
-                });
-        requestQueue.add(arrayReq);
-    }
-
-    private void getInfoAuthor(){
-        listAuthor = new ArrayList<>();
-        mappingAuthor = new HashMap<Integer, String>();
-        JsonArrayRequest arrayReq = new JsonArrayRequest(Request.Method.GET, Server.GETALLAUTHORS, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++){
-                            try {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                listAuthor.add(new Author(
-                                        Integer.parseInt(jsonObject.getString("author_id")),
-                                        jsonObject.getString("name")
-                                ));
-                                mappingAuthor.put(listAuthor.get(i).getAuthor_id(), listAuthor.get(i).getName());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(HomeActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
-                    }
-                });
-        requestQueue.add(arrayReq);
-    }
-
-    private void getListBorrowedBook() {
-        listBorrowedBook = new ArrayList<BorrowedBook>();
-        String url = Server.GETBORROWEDBOOK + "?id=" + valueOf(user_id);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                listBorrowedBook.add(new BorrowedBook(
-                                        jsonObject.getInt("bill_id"),
-                                        jsonObject.getInt("user_id"),
-                                        jsonObject.getInt("book_id"),
-                                        jsonObject.getString("dateOfBorrowed"),
-                                        jsonObject.getString("dateOfPurchase"),
-                                        jsonObject.getInt("state")
-                                ));
-                                for (int j = 0; j < listBook.size(); j++){
-                                    if (listBook.get(j).getBook_id() == listBorrowedBook.get(i).getBook_id()){
-                                        listBorrowedBook.get(i).setName(listBook.get(j).getName());
-                                        listBorrowedBook.get(i).setImage(listBook.get(j).getImage());
-                                    }
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }, null);
-        requestQueue.add(jsonArrayRequest);
     }
 
     @Override
@@ -449,7 +182,6 @@ public class HomeActivity extends AppCompatActivity {
         android.os.Process.killProcess(android.os.Process.myPid());
         super.onDestroy();
     }
-
 
     private void mapping() {
         toolbarHome = findViewById(R.id.toolbarHome);

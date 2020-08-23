@@ -26,4 +26,11 @@ public class BookOfAuthors implements Serializable {
     public int getBook_id() {
         return book_id;
     }
+
+    public Boolean areVariablesNull() {
+        if (author_id == 0 || book_id == 0){
+            return false;
+        }
+        return true;
+    }
 }

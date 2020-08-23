@@ -7,7 +7,11 @@ public class Category implements Serializable {
     private int category_id;
     private String name;
 
-    public Category() {
+    public Boolean areVariablesNull() {
+        if (category_id == 0 || name == null){
+            return false;
+        }
+        return true;
     }
 
     public Category(int category_id, String name) {

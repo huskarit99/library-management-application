@@ -2,7 +2,7 @@ package com.example.librarymanagement.models;
 
 import java.io.Serializable;
 
-public class Author {
+public class Author implements Serializable {
     private int author_id;
     private String name;
 
@@ -25,5 +25,11 @@ public class Author {
 
     public int getAuthor_id() {
         return author_id;
+    }
+
+    public Boolean areVariablesNull() {
+        if (author_id == 0 || name == null)
+            return false;
+        return true;
     }
 }

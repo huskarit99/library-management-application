@@ -45,7 +45,7 @@ public class BorrowedBookActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     public int idUser;
-    public ArrayList<BorrowedBook> listBorrowedBook;
+    public ArrayList<BorrowedBook> listBorrowedBookByUserId;
     CustomAdapter customAdapter;
 
     @Override
@@ -65,11 +65,7 @@ public class BorrowedBookActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
-        listBorrowedBook = (ArrayList<BorrowedBook>) intent.getSerializableExtra("BORROWEDBOOK");
-
-        sessionManager = new SessionManager(this);
-        idUser = sessionManager.getUser();
+        getListBorrowedBookByUserId();
 
         customAdapter = new BorrowedBookActivity.CustomAdapter();
         listView.setAdapter(customAdapter);
@@ -79,12 +75,24 @@ public class BorrowedBookActivity extends AppCompatActivity {
         listView = findViewById(R.id.listBorrowedBook);
         toolbar = findViewById(R.id.toolbarBorrowedBook);
     }
+
+    public void getListBorrowedBookByUserId(){
+        listBorrowedBookByUserId = new ArrayList<BorrowedBook>();
+        sessionManager = new SessionManager(this);
+        idUser = sessionManager.getUserId();
+        ArrayList<BorrowedBook> listBorrowedBook = sessionManager.getBorrowedBook();
+        for (int i = 0; i < listBorrowedBook.size(); i++){
+            if (idUser == listBorrowedBook.get(i).getUser_id()){
+                listBorrowedBookByUserId.add(listBorrowedBook.get(i));
+            }
+        }
+    }
+
     class CustomAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            System.out.println(listBorrowedBook.size());
-            return listBorrowedBook.size();
+            return listBorrowedBookByUserId.size();
         }
 
         @Override
@@ -108,15 +116,14 @@ public class BorrowedBookActivity extends AppCompatActivity {
             TextView borrowDate = view.findViewById(R.id.borrowDate);
             TextView payDate = view.findViewById(R.id.payDate);
 
-            String path = listBorrowedBook.get(i).getImage();
-            System.out.println(path);
+            String path = listBorrowedBookByUserId.get(i).getImage();
             path.replace("p:", "ps:");
             Picasso.get().load(path).into(image);
-            name.setText(listBorrowedBook.get(i).getName());
-            idBook.setText(valueOf(listBorrowedBook.get(i).getBook_id()));
-            idBill.setText(valueOf(listBorrowedBook.get(i).getBill_id()));
-            borrowDate.setText(listBorrowedBook.get(i).getDateOfBorrowed());
-            payDate.setText(listBorrowedBook.get(i).getDateOfPurchase());
+            name.setText(listBorrowedBookByUserId.get(i).getName());
+            idBook.setText(valueOf(listBorrowedBookByUserId.get(i).getBook_id()));
+            idBill.setText(valueOf(listBorrowedBookByUserId.get(i).getBill_id()));
+            borrowDate.setText(listBorrowedBookByUserId.get(i).getDateOfBorrowed());
+            payDate.setText(listBorrowedBookByUserId.get(i).getDateOfPurchase());
             return view;
         }
     }

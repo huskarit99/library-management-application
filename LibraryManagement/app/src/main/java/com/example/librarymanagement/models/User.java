@@ -12,7 +12,12 @@ public class User implements Serializable {
     String address;
     String image;
 
-    public User() {
+    public Boolean areVariablesNull() {
+        if (user_id == 0 || role_id == 0 || name == null || gender == null || email == null
+                || birthday == null || address == null || image == null){
+            return false;
+        }
+        return true;
     }
 
     public User(int user_id, int role_id, String name, String gender, String email, String birthday, String address, String image) {

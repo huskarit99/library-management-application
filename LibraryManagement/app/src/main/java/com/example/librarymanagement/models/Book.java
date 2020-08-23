@@ -107,4 +107,13 @@ public class Book implements Serializable {
     public String getName() {
         return name;
     }
+
+    public Boolean areVariablesNull() {
+        if (book_id == 0 || category_id == 0 || publicationYear == 0 || name == null || publicationYear == 0
+                || amount == 0 || image == null || authors == null || category == null || publisher == null){
+            return false;
+        }
+        return true;
+    }
+
 }

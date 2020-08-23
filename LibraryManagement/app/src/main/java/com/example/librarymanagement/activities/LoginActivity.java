@@ -206,7 +206,7 @@ public class LoginActivity extends AppCompatActivity {
                             int role = Integer.parseInt(response);
                             sessionManager.setLogin(true);
                             sessionManager.setRole(role);
-                            sessionManager.setUser(Integer.parseInt(userId));
+                            sessionManager.setUserId(Integer.parseInt(userId));
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(intent);

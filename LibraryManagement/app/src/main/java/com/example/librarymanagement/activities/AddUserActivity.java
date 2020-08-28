@@ -32,12 +32,16 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.librarymanagement.R;
 import com.example.librarymanagement.networks.CheckConnect;
+import com.example.librarymanagement.networks.GetData;
 import com.example.librarymanagement.networks.Server;
 import com.example.librarymanagement.networks.SessionManager;
+
+import org.json.JSONArray;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
@@ -49,13 +53,14 @@ public class AddUserActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private EditText edtName, edtIdUser, edtEmail, edtBirthday, edtAddress;
     private ImageView edtImage, btnCalendar;
-    private String user_id, name, role, gender, email, birthday, address, password, state;
-    private String image;
+    private String user_id, name, role, gender, email, birthday, address, password, state, temp, image;
     private RadioButton radioButton;
     private RadioGroup radioGroup;
     private DatePickerDialog datePickerDialog;
     private TextView tvId;
     private SessionManager sessionManager;
+    private GetData getData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +69,9 @@ public class AddUserActivity extends AppCompatActivity {
 
         mapping();
         sessionManager = new SessionManager(this);
+        getData = new GetData(this);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle("Thêm độc giả");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,25 +79,18 @@ public class AddUserActivity extends AppCompatActivity {
                 finish();
             }
         });
+        temp = "Bạn có muốn thêm độc giả này?";
+        state = "1";
+        role = "1";
         if(sessionManager.getRole()==3){
             Intent intent = getIntent();
-            if(intent.getStringExtra("ROLE").equals("add_reader")) {
-                getSupportActionBar().setTitle("Thêm độc giả");
-                tvId.setText("Mã độc giả");
-                role = "1";
-                state = "1";
-            }else {
+            if(intent.getStringExtra("ADD").equals("add_librarian")) {
                 getSupportActionBar().setTitle("Thêm thủ thư");
                 tvId.setText("Mã thủ thư");
                 role = "2";
-                state = "1";
+                temp = "Bạn có muốn thêm thủ thư này?";
+                edtIdUser.setHint("Mã thủ thư");
             }
-
-        } else if(sessionManager.getRole()==2){
-            getSupportActionBar().setTitle("Thêm độc giả");
-            tvId.setText("Mã độc giả");
-            role = "1";
-            state = "1";
         }
 
         edtImage.setOnClickListener(new View.OnClickListener() {
@@ -141,11 +140,11 @@ public class AddUserActivity extends AppCompatActivity {
                 birthday = edtBirthday.getText().toString();
                 address = edtAddress.getText().toString();
                 password = "123456";
-                if(user_id.isEmpty() || name.isEmpty() || birthday.isEmpty() || address.isEmpty() || email.isEmpty() || image.isEmpty()){
+                if(user_id.isEmpty() || name.isEmpty() || birthday.isEmpty() || address.isEmpty() || email.isEmpty() || image==null){
                     Toast.makeText(AddUserActivity.this, "Bạn chưa nhập dữ liệu", Toast.LENGTH_SHORT).show();
                 }else{
                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddUserActivity.this);
-                    builder.setMessage("Bạn có muốn chỉnh sửa độc giả này?")
+                    builder.setMessage(temp)
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -159,6 +158,11 @@ public class AddUserActivity extends AppCompatActivity {
                                                 public void onResponse(String response) {
                                                     if(response.equals("Success")){
                                                         Toast.makeText(AddUserActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                                                        if(getSupportActionBar().getTitle().equals("Thêm thủ thư")){
+                                                            getListLibrarian();
+                                                        }else{
+                                                            getListReader();
+                                                        }
                                                         finish();
                                                     }else{
                                                         Toast.makeText(AddUserActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
@@ -260,6 +264,60 @@ public class AddUserActivity extends AppCompatActivity {
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void getListReader(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = Server.GETALLUSERS +"?role_id="+1;
+                RequestQueue requestQueue = Volley.newRequestQueue(AddUserActivity.this);
+                JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                if(!response.toString().equals("empty")){
+                                    getData.setListReader(response);
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(AddUserActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                requestQueue.add(jsonArrayRequest);
+            }
+        });
+        thread .start();
+    }
+
+    private void getListLibrarian(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = Server.GETALLUSERS +"?role_id="+2;
+                RequestQueue requestQueue = Volley.newRequestQueue(AddUserActivity.this);
+                JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                if(!response.toString().equals("empty")){
+                                    getData.setListLibrarian(response);
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(AddUserActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                requestQueue.add(jsonArrayRequest);
+            }
+        });
+        thread .start();
     }
 
     private void mapping() {

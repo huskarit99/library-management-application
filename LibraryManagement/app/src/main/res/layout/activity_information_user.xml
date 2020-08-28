@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.InformationBookActivity"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".activities.InformationUserActivity">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/frame_info_user">
+        android:id="@+id/frame_info_reader">
         <include
-            android:id="@+id/toolbarInfoUser"
+            android:id="@+id/toolbarInfoReader"
             layout="@layout/toolbar"/>
     </FrameLayout>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frame_info_user"
+        android:layout_below="@+id/frame_info_reader"
         android:layout_marginTop="17dp"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
@@ -50,7 +50,7 @@
                     android:layout_marginStart="22.4dp"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/tvNameUser"
+                        android:id="@+id/tvNameReader"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/user_name"
@@ -66,6 +66,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/tvId"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/id_user"
@@ -89,21 +90,21 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
-                                android:id="@+id/tvIdUser"
+                                android:id="@+id/tvIdReader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/id_user"
                                 android:textColor="#000"
                                 android:layout_marginBottom="10dp"/>
                             <TextView
-                                android:id="@+id/tvBirthday"
+                                android:id="@+id/tvBirthdayReader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/birthday"
                                 android:textColor="#000"
                                 android:layout_marginBottom="10dp"/>
                             <TextView
-                                android:id="@+id/tvGender"
+                                android:id="@+id/tvGenderReader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/gender"
@@ -143,14 +144,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/tvEmail"
+                        android:id="@+id/tvEmailReader"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/email"
                         android:textColor="#000"
                         android:layout_marginBottom="21dp"/>
                     <TextView
-                        android:id="@+id/tvAddress"
+                        android:id="@+id/tvAddressReader"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/address"
@@ -161,4 +162,14 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <ImageButton
+        android:id="@+id/btnDelete"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/btn_delete"
+        android:src="@drawable/ic_delete"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
 </RelativeLayout>

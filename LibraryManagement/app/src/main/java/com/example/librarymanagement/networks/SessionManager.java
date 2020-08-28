@@ -3,6 +3,8 @@ package com.example.librarymanagement.networks;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.json.JSONArray;
+
 public class SessionManager {
     private static String TAG = SessionManager.class.getName();
     SharedPreferences preferences;
@@ -13,6 +15,7 @@ public class SessionManager {
     private static final String KEY_LOGIN = "islogin";
     private static final String USER = "user";
     private static final String ROLE ="role";
+    private static final String INFO_USER = "info_user";
 
     public SessionManager(Context context) {
         this.context = context;
@@ -36,6 +39,14 @@ public class SessionManager {
 
     public int getRole(){
         return preferences.getInt(ROLE, 0);
+    }
+
+    public String getInfoUser(){
+        return preferences.getString(INFO_USER, "");
+    }
+    public void setInfoUser(JSONArray jsonArray){
+        editor.putString(INFO_USER, jsonArray.toString());
+        editor.commit();
     }
 
     public void setLogin(boolean isLogin){

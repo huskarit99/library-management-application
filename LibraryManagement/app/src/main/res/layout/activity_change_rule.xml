@@ -37,7 +37,6 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
@@ -160,7 +159,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="30dp"
                 app:cardCornerRadius="20dp">
@@ -182,7 +181,7 @@
                             android:textColor="#000"
                             android:textSize="18sp" />
                         <ImageButton
-                            android:id="@+id/btnAdd"
+                            android:id="@+id/btnAddCategory"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ic_black_add"

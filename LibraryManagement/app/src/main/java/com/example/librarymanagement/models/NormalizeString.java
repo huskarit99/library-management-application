@@ -1,4 +1,4 @@
-package com.example.librarymanagement.activities;
+package com.example.librarymanagement.models;
 
 import java.text.Normalizer;
 import java.util.regex.Pattern;

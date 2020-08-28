@@ -22,16 +22,10 @@
             android:name=".activities.ChangeRuleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.EditReaderActivity"
+            android:name=".activities.EditUserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.LibrarianManagerActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.InformationLibrarianActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.ReaderManagerActivity"
+            android:name=".activities.UserManagerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.StatisticActivity"
@@ -43,7 +37,7 @@
             android:name=".activities.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.InformationReaderActivity"
+            android:name=".activities.InformationUserActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.AddBookActivity" />
         <activity android:name=".activities.EditBookActivity" />
@@ -51,10 +45,7 @@
             android:name=".activities.AddUserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.EditLibrarianActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.InformationUserActivity"
+            android:name=".activities.InformationPersonActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.InformationBookActivity" />
         <activity

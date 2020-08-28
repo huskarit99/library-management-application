@@ -2,7 +2,7 @@ package com.example.librarymanagement.models;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class User implements Serializable, Comparable<User> {
     int user_id;
     int role_id;
     String name;
@@ -88,5 +88,10 @@ public class User implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return 1;
     }
 }

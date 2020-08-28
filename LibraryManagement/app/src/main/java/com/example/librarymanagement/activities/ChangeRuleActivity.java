@@ -25,6 +25,7 @@ import com.example.librarymanagement.R;
 import com.example.librarymanagement.adapters.CategoryAdapter;
 import com.example.librarymanagement.models.Category;
 import com.example.librarymanagement.networks.CheckConnect;
+import com.example.librarymanagement.networks.GetData;
 import com.example.librarymanagement.networks.Server;
 
 import org.json.JSONArray;
@@ -38,16 +39,19 @@ import java.util.Map;
 public class ChangeRuleActivity extends AppCompatActivity {
     Toolbar toolbar;
     EditText edtMaxDay, edtMaxBook, edtFine;
-    ImageButton btnSaveRule, btnAdd;
+    ImageButton btnSaveRule, btnAddCategory;
     ListView listCategories;
     CategoryAdapter categoryAdapter;
     ArrayList<Category> categoryArrayList;
     String url, id, price, maxBook, maxDay;
+    GetData getData;
+    JSONArray responseRule;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_rule);
+        getData = new GetData(this);
         mapping();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Thay đổi quy định");
@@ -60,14 +64,46 @@ public class ChangeRuleActivity extends AppCompatActivity {
         });
         categoryArrayList = new ArrayList<>();
         categoryAdapter = new CategoryAdapter(this, R.layout.row_category, categoryArrayList);
-        if(CheckConnect.isconnected(ChangeRuleActivity.this)){
-            getRule();
-            getCategories();
+        if (CheckConnect.isconnected(ChangeRuleActivity.this)) {
+            if(getData.getRule().equals("")){
+                Toast.makeText(ChangeRuleActivity.this, "Không thể load quy định", Toast.LENGTH_SHORT).show();
+            }else{
+                try {
+                    responseRule = new JSONArray(getData.getRule());
+                    JSONObject jsonObject = responseRule.getJSONObject(0);
+                    id = jsonObject.getString("id");
+                    price = jsonObject.getString("price");
+                    maxBook = jsonObject.getString("maximum_borrowed_books");
+                    maxDay = jsonObject.getString("maximum_borrowed_days");
+                    edtFine.setText(price);
+                    edtMaxBook.setText(maxBook);
+                    edtMaxDay.setText(maxDay);
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(getData.getListCategory().equals("")){
+                Toast.makeText(ChangeRuleActivity.this, "Không thể load thể loại", Toast.LENGTH_SHORT).show();
+            }else{
+                try {
+                    JSONArray responseCategory = new JSONArray(getData.getListCategory());
+                    for (int i = 0; i < responseCategory.length(); i++) {
+                        JSONObject jsonObjectCategory = responseCategory.getJSONObject(i);
+                        categoryArrayList.add(new Category(
+                                jsonObjectCategory.getInt("category_id"),
+                                jsonObjectCategory.getString("name")
+                        ));
+                        categoryAdapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
             listCategories.setAdapter(categoryAdapter);
-        }else{
+        } else {
             Toast.makeText(ChangeRuleActivity.this, "Thiết bị chưa kết nối mạng", Toast.LENGTH_SHORT).show();
         }
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        btnAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogAddCategory();
@@ -87,7 +123,8 @@ public class ChangeRuleActivity extends AppCompatActivity {
         });
 
     }
-    private boolean isNumberic(String str){
+
+    private boolean isNumberic(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");
     }
 
@@ -95,92 +132,76 @@ public class ChangeRuleActivity extends AppCompatActivity {
         final String tempPrice = edtFine.getText().toString();
         final String tempMaxBook = edtMaxBook.getText().toString();
         final String tempMaxDay = edtMaxDay.getText().toString();
-        if(tempPrice.isEmpty() || tempMaxBook.isEmpty() || tempMaxDay.isEmpty()){
+        if (tempPrice.isEmpty() || tempMaxBook.isEmpty() || tempMaxDay.isEmpty()) {
             Toast.makeText(ChangeRuleActivity.this, "Bạn chưa nhập dữ liệu", Toast.LENGTH_SHORT).show();
-        }else{
-            if(tempPrice.equals(price) && tempMaxBook.equals(maxBook) && tempMaxDay.equals(maxDay)){
+        } else {
+            if (tempPrice.equals(price) && tempMaxBook.equals(maxBook) && tempMaxDay.equals(maxDay)) {
                 Toast.makeText(ChangeRuleActivity.this, "Bạn chưa nhập dữ liệu mới", Toast.LENGTH_SHORT).show();
-            }else{
-                if(!isNumberic(tempPrice) || !isNumberic(tempMaxBook)||!isNumberic(tempMaxDay)){
+            } else {
+                if (!isNumberic(tempPrice) || !isNumberic(tempMaxBook) || !isNumberic(tempMaxDay)) {
                     Toast.makeText(ChangeRuleActivity.this, "Dữ liệu phải là số", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     final ProgressDialog pd = new ProgressDialog(ChangeRuleActivity.this);
                     pd.setMessage("Đang lưu...");
                     pd.show();
-                    RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.EDITRULE,
-                            new Response.Listener<String>() {
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.EDITRULE,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            if (response.equals("Success")) {
+                                                Toast.makeText(ChangeRuleActivity.this, "Chỉnh sửa quy định thành công", Toast.LENGTH_SHORT).show();
+                                                edtFine.setText(tempPrice);
+                                                edtMaxBook.setText(tempMaxBook);
+                                                edtMaxDay.setText(tempMaxDay);
+                                                try {
+                                                    JSONObject jsonObject = responseRule.getJSONObject(0);
+                                                    jsonObject.put("price",tempPrice);
+                                                    jsonObject.put("maximum_borrowed_books",tempMaxBook);
+                                                    jsonObject.put("maximum_borrowed_days", tempMaxDay);
+                                                    responseRule.put(0, jsonObject);
+                                                    getData.setRule(responseRule);
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                            } else {
+                                                Toast.makeText(ChangeRuleActivity.this, "Chỉnh sửa quy định thất bại", Toast.LENGTH_SHORT).show();
+                                            }
+                                            pd.dismiss();
+                                        }
+                                    }, new Response.ErrorListener() {
                                 @Override
-                                public void onResponse(String response) {
-                                    if (response.equals("Success")) {
-                                        Toast.makeText(ChangeRuleActivity.this, "Chỉnh sửa quy định thành công", Toast.LENGTH_SHORT).show();
-                                        edtFine.setText(tempPrice);
-                                        edtMaxBook.setText(tempMaxBook);
-                                        edtMaxDay.setText(tempMaxDay);
-                                    } else {
-                                        Toast.makeText(ChangeRuleActivity.this, "Chỉnh sửa quy định thất bại", Toast.LENGTH_SHORT).show();
-                                    }
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(ChangeRuleActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
                                     pd.dismiss();
                                 }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(ChangeRuleActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
-                            pd.dismiss();
+                            }) {
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("id", id);
+                                    params.put("price", tempPrice);
+                                    params.put("maximum_borrowed_books", tempMaxBook);
+                                    params.put("maximum_borrowed_days", tempMaxDay);
+                                    return params;
+                                }
+                            };
+                            requestQueue.add(stringRequest);
                         }
-                    }){
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("id", id);
-                            params.put("price", tempPrice);
-                            params.put("maximum_borrowed_books", tempMaxBook);
-                            params.put("maximum_borrowed_days", tempMaxDay);
-                            return params;
-                        }
-                    };
-                    requestQueue.add(stringRequest);
+                    });
+                    thread.start();
+
                 }
 
             }
         }
     }
 
-    private void getRule(){
-        url = Server.GETRULE+"?id=1";
-        final RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        if(response.equals("empty")){
-                            Toast.makeText(ChangeRuleActivity.this, "Không lấy dược dữ liệu", Toast.LENGTH_SHORT).show();
-                        }else{
-                            try {
-                                JSONObject jsonObject = response.getJSONObject(0);
-                                id = jsonObject.getString("id");
-                                price =jsonObject.getString("price");
-                                maxBook = jsonObject.getString("maximum_borrowed_books");
-                                maxDay = jsonObject.getString("maximum_borrowed_days");
-                                edtFine.setText(price);
-                                edtMaxBook.setText(maxBook);
-                                edtMaxDay.setText(maxDay);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ChangeRuleActivity.this,"Lỗi",Toast.LENGTH_SHORT).show();
-            }
-        });
-        requestQueue.add(jsonArrayRequest);
-
-
-    }
-    private void DialogEditCategory(final Category c){
+    private void DialogEditCategory(final Category c) {
         final Dialog dialog = new Dialog(ChangeRuleActivity.this);
         dialog.setContentView(R.layout.dialog_edit_category);
         dialog.setCanceledOnTouchOutside(false);
@@ -192,54 +213,62 @@ public class ChangeRuleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String name = edtAddNameCategory.getText().toString().trim();
-                if(name.isEmpty()){
+                if (name.isEmpty()) {
                     Toast.makeText(ChangeRuleActivity.this, "Bạn chưa nhập thể loại", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     int temp = 0;
-                    for(Category category : categoryArrayList){
-                        if(category.getName().equals(name)){
+                    for (Category category : categoryArrayList) {
+                        if (category.getName().equals(name)) {
                             Toast.makeText(ChangeRuleActivity.this, "Thể loại đã có sẵn", Toast.LENGTH_SHORT).show();
                             temp = 1;
                         }
                     }
-                    if(temp == 0){
+                    if (temp == 0) {
                         final ProgressDialog pd = new ProgressDialog(ChangeRuleActivity.this);
                         pd.setMessage("Đang lưu...");
                         pd.show();
-                        RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.EDITCATEGORY,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        if (response.equals("Success")) {
-                                            Toast.makeText(ChangeRuleActivity.this, "Chỉnh sửa thể loại thành công", Toast.LENGTH_SHORT).show();
-                                            for(int i = 0; i< categoryArrayList.size(); i++){
-                                                if(categoryArrayList.get(i).getCategory_id()==c.getCategory_id()){
-                                                    categoryArrayList.get(i).setName(name);
-                                                    categoryAdapter.notifyDataSetChanged();
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.EDITCATEGORY,
+                                        new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                if (response.equals("Success")) {
+                                                    Toast.makeText(ChangeRuleActivity.this, "Chỉnh sửa thể loại thành công", Toast.LENGTH_SHORT).show();
+                                                    for (int i = 0; i < categoryArrayList.size(); i++) {
+                                                        if (categoryArrayList.get(i).getCategory_id() == c.getCategory_id()) {
+                                                            categoryArrayList.get(i).setName(name);
+                                                            categoryAdapter.notifyDataSetChanged();
+                                                        }
+                                                    }
+                                                    getListCategory();
+                                                } else {
+                                                    Toast.makeText(ChangeRuleActivity.this, "Chỉnh sửa thể loại thất bại", Toast.LENGTH_SHORT).show();
                                                 }
+                                                pd.dismiss();
                                             }
-                                        } else {
-                                            Toast.makeText(ChangeRuleActivity.this, "Chỉnh sửa thể loại thất bại", Toast.LENGTH_SHORT).show();
-                                        }
+                                        }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Toast.makeText(ChangeRuleActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
                                         pd.dismiss();
                                     }
-                                }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(ChangeRuleActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
-                                pd.dismiss();
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        params.put("category_id", String.valueOf(c.getCategory_id()));
+                                        params.put("name", name);
+                                        return params;
+                                    }
+                                };
+                                requestQueue.add(stringRequest);
                             }
-                        }){
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put("category_id",String.valueOf(c.getCategory_id()));
-                                params.put("name", name);
-                                return params;
-                            }
-                        };
-                        requestQueue.add(stringRequest);
+                        });
+                        thread.start();
+
                         dialog.dismiss();
                     }
 
@@ -267,55 +296,60 @@ public class ChangeRuleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String name = edtAddNameCategory.getText().toString().trim();
-                if(name.isEmpty()){
+                if (name.isEmpty()) {
                     Toast.makeText(ChangeRuleActivity.this, "Bạn chưa nhập thể loại", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     int temp = 0;
-                    for(Category category : categoryArrayList){
-                        if(category.getName().equals(name)){
+                    for (Category category : categoryArrayList) {
+                        if (category.getName().equals(name)) {
                             Toast.makeText(ChangeRuleActivity.this, "Thể loại đã có sẵn", Toast.LENGTH_SHORT).show();
                             temp = 1;
                         }
                     }
-                    if(temp == 0){
+                    if (temp == 0) {
                         final ProgressDialog pd = new ProgressDialog(ChangeRuleActivity.this);
                         pd.setMessage("Đang lưu...");
                         pd.show();
-                        RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDCATEGORY,
-                                new Response.Listener<String>() {
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                RequestQueue requestQueue = Volley.newRequestQueue(getApplication());
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.ADDCATEGORY,
+                                        new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                if (response.equals("Success")) {
+                                                    Toast.makeText(ChangeRuleActivity.this, "Thêm thể loại thành công", Toast.LENGTH_SHORT).show();
+                                                    int length = categoryArrayList.size();
+                                                    Category category = new Category(length + 1, name);
+                                                    categoryArrayList.add(category);
+                                                    categoryAdapter.notifyDataSetChanged();
+                                                    getListCategory();
+                                                } else {
+                                                    Toast.makeText(ChangeRuleActivity.this, "Thêm thể loại thất bại", Toast.LENGTH_SHORT).show();
+                                                }
+                                                pd.dismiss();
+                                            }
+                                        }, new Response.ErrorListener() {
                                     @Override
-                                    public void onResponse(String response) {
-                                        if (response.equals("Success")) {
-                                            Toast.makeText(ChangeRuleActivity.this, "Thêm thể loại thành công", Toast.LENGTH_SHORT).show();
-                                            int length = categoryArrayList.size();
-                                            Category category = new Category(length+1, name);
-                                            Toast.makeText(ChangeRuleActivity.this, String.valueOf(length+1), Toast.LENGTH_SHORT).show();
-                                            categoryArrayList.add(category);
-                                            categoryAdapter.notifyDataSetChanged();
-                                        } else {
-                                            Toast.makeText(ChangeRuleActivity.this, "Thêm thể loại thất bại", Toast.LENGTH_SHORT).show();
-                                        }
+                                    public void onErrorResponse(VolleyError error) {
+                                        Toast.makeText(ChangeRuleActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
                                         pd.dismiss();
                                     }
-                                }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(ChangeRuleActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
-                                pd.dismiss();
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        params.put("name", name);
+                                        return params;
+                                    }
+                                };
+                                requestQueue.add(stringRequest);
                             }
-                        }){
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put("name", name);
-                                return params;
-                            }
-                        };
-                        requestQueue.add(stringRequest);
+                        });
+                        thread.start();
                         dialog.dismiss();
                     }
-
                 }
             }
         });
@@ -328,37 +362,30 @@ public class ChangeRuleActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void getCategories(){
-        RequestQueue requestQueue = Volley.newRequestQueue(ChangeRuleActivity.this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Server.GETALLCATEGORIES, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        if (response.equals("empty")) {
-                            Toast.makeText(ChangeRuleActivity.this, "Danh sách rỗng", Toast.LENGTH_SHORT).show();
-                        } else {
-                            for (int i = 0; i < response.length(); i++) {
-                                try {
-                                    JSONObject jsonObject = response.getJSONObject(i);
-                                    categoryArrayList.add(new Category(
-                                            jsonObject.getInt("category_id"),
-                                            jsonObject.getString("name")
-                                    ));
-                                    categoryAdapter.notifyDataSetChanged();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+    private void getListCategory(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestQueue requestQueue = Volley.newRequestQueue(ChangeRuleActivity.this);
+                JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, Server.GETALLCATEGORIES, null,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                if(!response.toString().equals("empty")){
+                                    getData.setListCategory(response);
                                 }
                             }
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ChangeRuleActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(ChangeRuleActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                requestQueue.add(jsonArrayRequest);
             }
         });
-        requestQueue.add(jsonArrayRequest);
-
+        thread .start();
     }
 
     private void mapping() {
@@ -367,7 +394,7 @@ public class ChangeRuleActivity extends AppCompatActivity {
         edtMaxBook = findViewById(R.id.edtMaxBook);
         edtFine = findViewById(R.id.edtFine);
         btnSaveRule = findViewById(R.id.btnSaveRule);
-        btnAdd = findViewById(R.id.btnAdd);
+        btnAddCategory = findViewById(R.id.btnAddCategory);
         listCategories = findViewById(R.id.listCategories);
     }
 }

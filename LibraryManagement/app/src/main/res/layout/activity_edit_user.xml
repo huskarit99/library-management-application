@@ -5,27 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".activities.EditLibrarianActivity"
+    tools:context=".activities.EditUserActivity"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:clickable="true">
 
     <FrameLayout
-        android:id="@+id/frame_edit_librarian"
+        android:id="@+id/frame_edit_reader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include
-            android:id="@+id/toolbarEditLibrarian"
+            android:id="@+id/toolbarEditReader"
             layout="@layout/toolbar" />
     </FrameLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frame_edit_librarian"
+        android:layout_below="@+id/frame_edit_reader"
         android:scrollbarThumbVertical="@null">
-
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -52,10 +51,10 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/avatarLibrarian"
+                            android:id="@+id/avatarReader"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/image_reader" />
+                            android:src="@drawable/ic_add_user" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -65,7 +64,7 @@
                         android:orientation="vertical">
 
                         <EditText
-                            android:id="@+id/edtNameLibrarian"
+                            android:id="@+id/edtNameReader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/user_name"
@@ -80,18 +79,19 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/tvId"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/id_librarian"
+                                android:text="@string/id_user"
                                 android:textColor="#000" />
 
                             <TextView
-                                android:id="@+id/tvIdLibrarian"
+                                android:id="@+id/tvIdReader"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:text="@string/id_librarian"
-                                android:textColor="#000" />
+                                android:hint="@string/id_user"
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -114,7 +114,7 @@
                                 android:weightSum="4">
                                 <EditText
                                     android:singleLine="true"
-                                    android:id="@+id/edtBirthdayLibrarian"
+                                    android:id="@+id/edtBirthdayReader"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="3"
@@ -128,6 +128,7 @@
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_calendar" />
                             </LinearLayout>
+
 
                         </LinearLayout>
 
@@ -190,7 +191,7 @@
 
                         <EditText
                             android:singleLine="true"
-                            android:id="@+id/edtEmailLibrarian"
+                            android:id="@+id/edtEmailReader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="31dp"
@@ -213,7 +214,7 @@
 
                         <EditText
                             android:singleLine="true"
-                            android:id="@+id/edtAddressLibrarian"
+                            android:id="@+id/edtAddressReader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="22dp"

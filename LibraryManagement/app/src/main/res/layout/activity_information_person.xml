@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".activities.InformationReaderActivity">
+    tools:context=".activities.InformationPersonActivity"
+    android:background="@color/background">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/frame_info_reader">
+        android:id="@+id/frame_info_user">
         <include
-            android:id="@+id/toolbarInfoReader"
+            android:id="@+id/toolbarInfoUser"
             layout="@layout/toolbar"/>
     </FrameLayout>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frame_info_reader"
+        android:layout_below="@+id/frame_info_user"
         android:layout_marginTop="17dp"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
@@ -50,7 +50,7 @@
                     android:layout_marginStart="22.4dp"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/tvNameReader"
+                        android:id="@+id/tvNameUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/user_name"
@@ -89,21 +89,21 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
-                                android:id="@+id/tvIdReader"
+                                android:id="@+id/tvIdUser"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/id_user"
                                 android:textColor="#000"
                                 android:layout_marginBottom="10dp"/>
                             <TextView
-                                android:id="@+id/tvBirthdayReader"
+                                android:id="@+id/tvBirthday"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/birthday"
                                 android:textColor="#000"
                                 android:layout_marginBottom="10dp"/>
                             <TextView
-                                android:id="@+id/tvGenderReader"
+                                android:id="@+id/tvGender"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/gender"
@@ -143,14 +143,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/tvEmailReader"
+                        android:id="@+id/tvEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/email"
                         android:textColor="#000"
                         android:layout_marginBottom="21dp"/>
                     <TextView
-                        android:id="@+id/tvAddressReader"
+                        android:id="@+id/tvAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/address"
@@ -161,14 +161,4 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <ImageButton
-        android:id="@+id/btnDelete"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/btn_delete"
-        android:src="@drawable/ic_delete"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"/>
 </RelativeLayout>

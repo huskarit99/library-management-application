@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.librarymanagement.R;
 import com.example.librarymanagement.models.Book;
+import com.example.librarymanagement.models.NormalizeString;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
